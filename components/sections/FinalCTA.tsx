@@ -3,10 +3,9 @@ import { WaitlistInlineForm } from "../waitlist/WaitlistInlineForm";
 
 interface FinalCTAProps {
   inlineSource: WaitlistSource;
-  onOpenModal: () => void;
 }
 
-export function FinalCTA({ inlineSource, onOpenModal }: FinalCTAProps) {
+export function FinalCTA({ inlineSource }: FinalCTAProps) {
   return (
     <section className="section final-cta" aria-labelledby="final-cta-title">
       <div className="final-cta-grid" data-reveal="true">
@@ -18,9 +17,10 @@ export function FinalCTA({ inlineSource, onOpenModal }: FinalCTAProps) {
             environments before defects reach executive reporting. Join the waitlist for first-access diagnostic
             slots.
           </p>
-          <button type="button" className="btn btn-secondary" onClick={onOpenModal}>
-            Prefer a guided walkthrough? Open intake modal
-          </button>
+          <p>
+            No pitch deck gatekeeping. Drop your email and we will send diagnostic slot availability and sample
+            discrepancy output.
+          </p>
         </div>
         <WaitlistInlineForm
           source={inlineSource}

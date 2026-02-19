@@ -1,7 +1,3 @@
-interface HowItWorksProps {
-  onCta: () => void;
-}
-
 const STEPS = [
   {
     name: "Connect",
@@ -20,7 +16,7 @@ const STEPS = [
   }
 ];
 
-export function HowItWorks({ onCta }: HowItWorksProps) {
+export function HowItWorks() {
   return (
     <section className="section" aria-labelledby="how-it-works-title">
       <div className="section-head" data-reveal="true">
@@ -41,9 +37,6 @@ export function HowItWorks({ onCta }: HowItWorksProps) {
           Dashboard visibility includes migration status by location, validation pass rates, discrepancy severity
           distribution, and convergence trends toward go-live readiness.
         </p>
-        <button type="button" className="btn btn-secondary" onClick={onCta}>
-          Join early access
-        </button>
       </div>
     </section>
   );

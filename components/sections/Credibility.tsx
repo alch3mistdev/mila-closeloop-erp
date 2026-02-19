@@ -1,10 +1,6 @@
 import { credibilityPoints, storyInsights } from "../../lib/content";
 
-interface CredibilityProps {
-  onCta: () => void;
-}
-
-export function Credibility({ onCta }: CredibilityProps) {
+export function Credibility() {
   return (
     <section className="section" aria-labelledby="credibility-title">
       <div className="section-head" data-reveal="true">
@@ -29,9 +25,6 @@ export function Credibility({ onCta }: CredibilityProps) {
               </article>
             ))}
           </div>
-          <button type="button" className="btn btn-primary" onClick={onCta}>
-            Get design partner updates
-          </button>
         </div>
       </div>
     </section>

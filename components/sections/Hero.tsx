@@ -1,13 +1,16 @@
+import { BrandLockup } from "../brand/BrandLockup";
+
 interface HeroProps {
   onPrimaryCta: () => void;
-  onSecondaryCta: () => void;
+  onExploreSimulator: () => void;
 }
 
-export function Hero({ onPrimaryCta, onSecondaryCta }: HeroProps) {
+export function Hero({ onPrimaryCta, onExploreSimulator }: HeroProps) {
   return (
     <section className="section hero" aria-label="Hero">
       <div className="hero-grid" data-reveal="true">
         <div>
+          <BrandLockup />
           <p className="eyebrow">Pre-Launch Design Partner Phase</p>
           <h1 className="hero-title">Your ERP migration passed go-live. Your data didn&apos;t.</h1>
           <p className="hero-subtitle">
@@ -19,8 +22,8 @@ export function Hero({ onPrimaryCta, onSecondaryCta }: HeroProps) {
             <button type="button" className="btn btn-primary" onClick={onPrimaryCta}>
               Request a Migration Diagnostic
             </button>
-            <button type="button" className="btn btn-secondary" onClick={onSecondaryCta}>
-              Get the Validation Checklist
+            <button type="button" className="text-link" onClick={onExploreSimulator}>
+              Explore the interactive simulation first
             </button>
           </div>
           <p className="support-line">

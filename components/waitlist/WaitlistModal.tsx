@@ -52,7 +52,7 @@ export function WaitlistModal({ isOpen, source, onClose }: WaitlistModalProps) {
         <WaitlistInlineForm
           key={source}
           source={source}
-          formTitle="Request migration diagnostic + early access"
+          formTitle="Join CloseLoop diagnostic waitlist"
           buttonLabel="Secure my spot"
         />
       </section>

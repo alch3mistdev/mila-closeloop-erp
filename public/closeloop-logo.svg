@@ -1,0 +1,8 @@
+<svg width="244" height="52" viewBox="0 0 244 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="2" y="2" width="48" height="48" rx="14" fill="#F7F3EA" stroke="#C9B9A5"/>
+  <path d="M12 18H22C26.9706 18 31 22.0294 31 27C31 31.9706 26.9706 36 22 36H12V18Z" fill="#005E66"/>
+  <path d="M40 34H30C25.0294 34 21 29.9706 21 25C21 20.0294 25.0294 16 30 16H40V34Z" fill="#E84E1B"/>
+  <circle cx="37.5" cy="25" r="3" fill="#F7F3EA"/>
+  <text x="64" y="30" fill="#151311" font-family="Iowan Old Style, Palatino, serif" font-size="24" letter-spacing="0.2">CloseLoop</text>
+  <text x="65" y="43" fill="#655C53" font-family="IBM Plex Mono, SFMono-Regular, Menlo, monospace" font-size="8" letter-spacing="1.8">MIGRATION INTEGRITY PLATFORM</text>
+</svg>

@@ -1,10 +1,6 @@
 import { painCards } from "../../lib/content";
 
-interface PainNarrativeProps {
-  onCta: () => void;
-}
-
-export function PainNarrative({ onCta }: PainNarrativeProps) {
+export function PainNarrative() {
   return (
     <section className="section" aria-labelledby="pain-narrative-title">
       <div className="section-head" data-reveal="true">
@@ -19,11 +15,6 @@ export function PainNarrative({ onCta }: PainNarrativeProps) {
             <p>{card.body}</p>
           </article>
         ))}
-      </div>
-      <div className="centered-row" data-reveal="true">
-        <button type="button" className="btn btn-primary" onClick={onCta}>
-          Run the interactive mini diagnostic
-        </button>
       </div>
     </section>
   );
