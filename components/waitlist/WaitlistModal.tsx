@@ -1,16 +1,17 @@
 "use client";
 
 import { useEffect } from "react";
-import { WaitlistSource } from "../../lib/waitlist";
+import { WaitlistScenarioSnapshot, WaitlistSource } from "../../lib/waitlist";
 import { WaitlistInlineForm } from "./WaitlistInlineForm";
 
 interface WaitlistModalProps {
   isOpen: boolean;
   source: WaitlistSource;
+  scenarioSnapshot?: WaitlistScenarioSnapshot;
   onClose: () => void;
 }
 
-export function WaitlistModal({ isOpen, source, onClose }: WaitlistModalProps) {
+export function WaitlistModal({ isOpen, source, scenarioSnapshot, onClose }: WaitlistModalProps) {
   useEffect(() => {
     if (!isOpen) {
       return;
@@ -52,8 +53,10 @@ export function WaitlistModal({ isOpen, source, onClose }: WaitlistModalProps) {
         <WaitlistInlineForm
           key={source}
           source={source}
+          scenarioSnapshot={scenarioSnapshot}
           formTitle="Join CloseLoop diagnostic waitlist"
           buttonLabel="Secure my spot"
+          autoFocusEmail
         />
       </section>
     </div>

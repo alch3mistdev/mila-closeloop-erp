@@ -244,6 +244,27 @@ export function calculateRiskPressure(input: DiagnosticInput): number {
   return (normalizedPlants * 1.4 + systemCount * 12) * strictnessFactor * cadenceMultiplier;
 }
 
+export function calculateReadinessScore(
+  findings: DiagnosticFinding[],
+  sourceSystemCount: number,
+  cadence: ValidationCadence
+): number {
+  const highSeverityCount = findings.filter((finding) => finding.severity === "high").length;
+  const mediumSeverityCount = findings.filter((finding) => finding.severity === "medium").length;
+
+  return Math.max(
+    41,
+    Math.round(
+      92 -
+        highSeverityCount * 11 -
+        mediumSeverityCount * 4 -
+        sourceSystemCount * 1.5 -
+        (cadence === "go_live_only" ? 8 : 0) +
+        (cadence === "parallel_plus_post" ? 5 : 0)
+    )
+  );
+}
+
 export function runDiagnostic(input: DiagnosticInput): DiagnosticFinding[] {
   const normalizedPlants = Math.max(1, Math.min(input.plantCount, 250));
   const systemCount = Math.max(1, input.sourceSystems.length);

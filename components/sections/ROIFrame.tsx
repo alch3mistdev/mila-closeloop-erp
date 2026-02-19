@@ -1,44 +1,58 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import {
+  calculateSavingsModel,
+  deriveSourceSystemsByCount,
+  SharedScenario
+} from "../../lib/scenarioModel";
 
 interface ROIFrameProps {
-  onCta: () => void;
+  scenario: SharedScenario;
+  onScenarioChange: (changes: Partial<SharedScenario>) => void;
+  onContinue: () => void;
 }
 
-interface Scenario {
+interface ScenarioPreset {
   label: string;
-  plants: number;
-  sourceSystems: number;
-  controllerRate: number;
-  monthlyManualHours: number;
-  defectDelayMonths: number;
+  scenario: Partial<SharedScenario>;
 }
 
-const SCENARIOS: Scenario[] = [
+const SCENARIO_PRESETS: ScenarioPreset[] = [
   {
     label: "Regional Program",
-    plants: 18,
-    sourceSystems: 4,
-    controllerRate: 96,
-    monthlyManualHours: 12,
-    defectDelayMonths: 14
+    scenario: {
+      plantCount: 18,
+      sourceSystems: ["SAP ECC", "Oracle", "Spreadsheets"],
+      controllerRate: 96,
+      monthlyManualHours: 12,
+      defectDelayMonths: 14,
+      validationCadence: "phase_gates",
+      strictness: 90
+    }
   },
   {
     label: "Global Rollout",
-    plants: 48,
-    sourceSystems: 7,
-    controllerRate: 110,
-    monthlyManualHours: 18,
-    defectDelayMonths: 20
+    scenario: {
+      plantCount: 48,
+      sourceSystems: ["SAP ECC", "Oracle", "Microsoft Dynamics", "AS/400", "Custom SQL", "Spreadsheets"],
+      controllerRate: 110,
+      monthlyManualHours: 18,
+      defectDelayMonths: 20,
+      validationCadence: "parallel_plus_post",
+      strictness: 102
+    }
   },
   {
     label: "Post-M&A Integration",
-    plants: 30,
-    sourceSystems: 9,
-    controllerRate: 102,
-    monthlyManualHours: 16,
-    defectDelayMonths: 24
+    scenario: {
+      plantCount: 30,
+      sourceSystems: ["Oracle", "Microsoft Dynamics", "AS/400", "Custom SQL", "Spreadsheets"],
+      controllerRate: 102,
+      monthlyManualHours: 16,
+      defectDelayMonths: 24,
+      validationCadence: "go_live_only",
+      strictness: 98
+    }
   }
 ];
 
@@ -50,46 +64,13 @@ function currency(value: number): string {
   }).format(value);
 }
 
-export function ROIFrame({ onCta }: ROIFrameProps) {
-  const [plants, setPlants] = useState(24);
-  const [sourceSystems, setSourceSystems] = useState(5);
-  const [controllerRate, setControllerRate] = useState(98);
-  const [monthlyManualHours, setMonthlyManualHours] = useState(14);
-  const [defectDelayMonths, setDefectDelayMonths] = useState(18);
+export function ROIFrame({ scenario, onScenarioChange, onContinue }: ROIFrameProps) {
+  const model = calculateSavingsModel(scenario);
 
-  const model = useMemo(() => {
-    const annualManualHours = plants * monthlyManualHours * 12;
-    const annualManualCost = annualManualHours * controllerRate;
-    const automatedHours = annualManualHours * 0.38;
-    const automatedCost = automatedHours * controllerRate;
-    const laborSavings = Math.max(0, annualManualCost - automatedCost);
+  const sourceSystemCount = scenario.sourceSystems.length;
 
-    const lateDefectExposure = plants * sourceSystems * defectDelayMonths * 1150;
-    const riskAvoidanceValue = lateDefectExposure * 0.42;
-    const totalSavings = laborSavings + riskAvoidanceValue;
-    const monthlySavings = totalSavings / 12;
-    const manualShare = (annualManualCost / (annualManualCost + riskAvoidanceValue)) * 100;
-    const validatedShare = (automatedCost / (annualManualCost + riskAvoidanceValue)) * 100;
-
-    return {
-      annualManualCost,
-      automatedCost,
-      laborSavings,
-      lateDefectExposure,
-      riskAvoidanceValue,
-      totalSavings,
-      monthlySavings,
-      manualShare,
-      validatedShare
-    };
-  }, [controllerRate, defectDelayMonths, monthlyManualHours, plants, sourceSystems]);
-
-  function applyScenario(scenario: Scenario) {
-    setPlants(scenario.plants);
-    setSourceSystems(scenario.sourceSystems);
-    setControllerRate(scenario.controllerRate);
-    setMonthlyManualHours(scenario.monthlyManualHours);
-    setDefectDelayMonths(scenario.defectDelayMonths);
+  function applyPreset(preset: ScenarioPreset) {
+    onScenarioChange(preset.scenario);
   }
 
   return (
@@ -99,14 +80,9 @@ export function ROIFrame({ onCta }: ROIFrameProps) {
         <h2 id="roi-title">Play with your own assumptions and pressure-test migration economics</h2>
       </div>
       <div className="scenario-row" data-reveal="true">
-        {SCENARIOS.map((scenario) => (
-          <button
-            key={scenario.label}
-            type="button"
-            className="scenario-chip"
-            onClick={() => applyScenario(scenario)}
-          >
-            {scenario.label}
+        {SCENARIO_PRESETS.map((preset) => (
+          <button key={preset.label} type="button" className="scenario-chip" onClick={() => applyPreset(preset)}>
+            {preset.label}
           </button>
         ))}
       </div>
@@ -118,21 +94,28 @@ export function ROIFrame({ onCta }: ROIFrameProps) {
             type="range"
             min={8}
             max={120}
-            value={plants}
-            onChange={(event) => setPlants(Number(event.target.value))}
+            value={scenario.plantCount}
+            onChange={(event) => onScenarioChange({ plantCount: Number(event.target.value) })}
           />
-          <p>{plants} plants</p>
+          <p>{scenario.plantCount} plants</p>
 
           <label htmlFor="entity-range">Source systems</label>
           <input
             id="entity-range"
             type="range"
-            min={2}
-            max={12}
-            value={sourceSystems}
-            onChange={(event) => setSourceSystems(Number(event.target.value))}
+            min={1}
+            max={6}
+            value={sourceSystemCount}
+            onChange={(event) =>
+              onScenarioChange({
+                sourceSystems: deriveSourceSystemsByCount(
+                  scenario.sourceSystems,
+                  Number(event.target.value)
+                )
+              })
+            }
           />
-          <p>{sourceSystems} source environments</p>
+          <p>{sourceSystemCount} source environments</p>
 
           <label htmlFor="hours-range">Manual validation hours per plant/month</label>
           <input
@@ -140,10 +123,10 @@ export function ROIFrame({ onCta }: ROIFrameProps) {
             type="range"
             min={6}
             max={40}
-            value={monthlyManualHours}
-            onChange={(event) => setMonthlyManualHours(Number(event.target.value))}
+            value={scenario.monthlyManualHours}
+            onChange={(event) => onScenarioChange({ monthlyManualHours: Number(event.target.value) })}
           />
-          <p>{monthlyManualHours} hours</p>
+          <p>{scenario.monthlyManualHours} hours</p>
 
           <label htmlFor="rate-range">Controller blended hourly rate (USD)</label>
           <input
@@ -151,10 +134,10 @@ export function ROIFrame({ onCta }: ROIFrameProps) {
             type="range"
             min={55}
             max={220}
-            value={controllerRate}
-            onChange={(event) => setControllerRate(Number(event.target.value))}
+            value={scenario.controllerRate}
+            onChange={(event) => onScenarioChange({ controllerRate: Number(event.target.value) })}
           />
-          <p>{currency(controllerRate)} / hour</p>
+          <p>{currency(scenario.controllerRate)} / hour</p>
 
           <label htmlFor="delay-range">Average months to detect late defects</label>
           <input
@@ -162,10 +145,10 @@ export function ROIFrame({ onCta }: ROIFrameProps) {
             type="range"
             min={6}
             max={36}
-            value={defectDelayMonths}
-            onChange={(event) => setDefectDelayMonths(Number(event.target.value))}
+            value={scenario.defectDelayMonths}
+            onChange={(event) => onScenarioChange({ defectDelayMonths: Number(event.target.value) })}
           />
-          <p>{defectDelayMonths} months</p>
+          <p>{scenario.defectDelayMonths} months</p>
         </article>
 
         <article className="roi-results">
@@ -200,10 +183,12 @@ export function ROIFrame({ onCta }: ROIFrameProps) {
               <span className="bar manual" style={{ width: `${Math.max(model.manualShare, 8)}%` }} />
               <span className="bar validated" style={{ width: `${Math.max(model.validatedShare, 4)}%` }} />
             </div>
-            <p className="support-copy">Manual process load drops as automated validation absorbs reconciliation work.</p>
+            <p className="support-copy">
+              Assumption model for demo purposes. Replace with customer benchmarks during discovery.
+            </p>
           </div>
-          <button type="button" className="btn btn-primary roi-cta" onClick={onCta}>
-            Use my assumptions in a diagnostic
+          <button type="button" className="btn btn-secondary roi-cta" onClick={onContinue}>
+            Continue to waitlist with this scenario
           </button>
         </article>
       </div>

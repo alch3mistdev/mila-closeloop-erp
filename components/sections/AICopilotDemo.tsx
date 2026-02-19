@@ -8,7 +8,8 @@ import {
   parseSourceFields,
   suggestMappings
 } from "../../lib/aiCopilot";
-import { runDiagnostic } from "../../lib/demoEngine";
+import { DiagnosticFinding } from "../../lib/demoEngine";
+import { SharedScenario } from "../../lib/scenarioModel";
 
 const TARGET_FIELDS = [
   "Plant",
@@ -34,7 +35,41 @@ const DEFAULT_SOURCE_FIELDS = [
   "POSTING_DT"
 ].join("\n");
 
-export function AICopilotDemo() {
+interface AICopilotDemoProps {
+  scenario: SharedScenario;
+  findings: DiagnosticFinding[];
+  readinessScore: number;
+  projectedAnnualValue: number;
+  projectedMonthlyValue: number;
+}
+
+function currency(value: number): string {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: 0
+  }).format(value);
+}
+
+function cadenceLabel(value: SharedScenario["validationCadence"]): string {
+  if (value === "parallel_plus_post") {
+    return "Parallel + Post";
+  }
+
+  if (value === "go_live_only") {
+    return "Go-live Only";
+  }
+
+  return "Phase Gates";
+}
+
+export function AICopilotDemo({
+  scenario,
+  findings,
+  readinessScore,
+  projectedAnnualValue,
+  projectedMonthlyValue
+}: AICopilotDemoProps) {
   const [sourceInput, setSourceInput] = useState(DEFAULT_SOURCE_FIELDS);
   const [reviewThreshold, setReviewThreshold] = useState(80);
   const [selectedSuggestion, setSelectedSuggestion] = useState(0);
@@ -46,22 +81,18 @@ export function AICopilotDemo() {
 
   const sourceFields = useMemo(() => parseSourceFields(sourceInput), [sourceInput]);
   const suggestions = useMemo(() => suggestMappings(sourceFields, TARGET_FIELDS), [sourceFields]);
-  const syntheticFindings = useMemo(
-    () =>
-      runDiagnostic({
-        sourceSystems: ["Oracle", "Custom SQL", "Spreadsheets"],
-        plantCount: 26,
-        strictness: 1,
-        validationCadence: "phase_gates"
-      }),
-    []
-  );
 
   const flaggedCount = suggestions.filter((suggestion) => suggestion.confidence < reviewThreshold).length;
+  const manualMinutesPerCycle = suggestions.length * 18 + findings.length * 24;
+  const copilotMinutesPerCycle = suggestions.length * 6 + findings.length * 9;
+  const cycleHoursSaved = Math.max(0, (manualMinutesPerCycle - copilotMinutesPerCycle) / 60);
+  const cycleReductionPercent = manualMinutesPerCycle
+    ? Math.round(((manualMinutesPerCycle - copilotMinutesPerCycle) / manualMinutesPerCycle) * 100)
+    : 0;
   const selected = suggestions[selectedSuggestion];
   const pmoDraft = useMemo(
-    () => buildPmoDraft(suggestions, syntheticFindings, reviewThreshold),
-    [reviewThreshold, suggestions, syntheticFindings]
+    () => buildPmoDraft(suggestions, findings, reviewThreshold),
+    [reviewThreshold, suggestions, findings]
   );
 
   useEffect(() => {
@@ -82,7 +113,16 @@ export function AICopilotDemo() {
           audience,
           reviewThreshold,
           suggestions,
-          findings: syntheticFindings
+          findings,
+          scenario: {
+            plantCount: scenario.plantCount,
+            sourceSystems: scenario.sourceSystems,
+            validationCadence: scenario.validationCadence,
+            strictness: scenario.strictness,
+            readinessScore,
+            projectedAnnualValue,
+            projectedMonthlyValue
+          }
         })
       });
 
@@ -107,12 +147,38 @@ export function AICopilotDemo() {
         <p className="eyebrow">AI Copilot Demo</p>
         <h2 id="ai-copilot-title">See how AI removes manual mapping and status-update busywork</h2>
       </div>
+      <div className="scenario-compact" data-reveal="true">
+        <p className="label">Using shared scenario</p>
+        <p>
+          {scenario.plantCount} plants | {scenario.sourceSystems.length} source systems |{" "}
+          {cadenceLabel(scenario.validationCadence)} | Readiness {readinessScore}/100 | Annual value at stake{" "}
+          {currency(projectedAnnualValue)}
+        </p>
+      </div>
+      <div className="ai-impact-strip" data-reveal="true">
+        <article>
+          <p className="label">AI workflow impact (demo model)</p>
+          <h3>{cycleHoursSaved.toFixed(1)} hours saved per validation cycle</h3>
+          <p>
+            Estimated {cycleReductionPercent}% reduction in mapping triage and PMO status-draft effort for the
+            current discrepancy set.
+          </p>
+        </article>
+        <article>
+          <p className="label">High-focus queue</p>
+          <h3>{flaggedCount} mappings need controller review</h3>
+          <p>
+            Copilot narrows attention to low-confidence matches so teams spend expert review time where risk is
+            concentrated.
+          </p>
+        </article>
+      </div>
       <div className="ai-demo-grid" data-reveal="true">
         <article className="ai-panel">
           <h3>1. Paste legacy field names</h3>
           <p className="support-copy">
-            Local heuristic mapping runs in-browser. Live OpenAI mode sends this simulated field list to your
-            server-side API route for generation.
+            Local heuristic mapping runs in-browser. Live OpenAI mode sends this simulated field list plus
+            active scenario context to your server-side API route for generation.
           </p>
           <textarea
             className="field-input"
@@ -183,8 +249,8 @@ export function AICopilotDemo() {
         <article className="ai-panel pmo-panel">
           <h3>3. Generate persuasive AI stakeholder narrative</h3>
           <p className="support-copy">
-            Live generation turns technical mapping + discrepancy context into executive messaging, objection
-            handling, and a CTA-ready storyline.
+            Live generation uses your current scenario and findings to produce audience-specific messaging and
+            action language.
           </p>
           <div className="audience-row">
             {(["CFO", "PMO", "Plant Controller"] as CopilotAudience[]).map((candidate) => (
@@ -210,7 +276,9 @@ export function AICopilotDemo() {
           {liveResult ? (
             <div className="live-output">
               <p className={`live-badge ${liveResult.mode}`}>
-                {liveResult.mode === "live" ? `Live OpenAI${liveResult.model ? ` (${liveResult.model})` : ""}` : "Fallback mode"}
+                {liveResult.mode === "live"
+                  ? `Live OpenAI${liveResult.model ? ` (${liveResult.model})` : ""}`
+                  : "Fallback mode"}
               </p>
               {liveResult.warning ? <p className="support-copy">{liveResult.warning}</p> : null}
               <p className="label">{liveResult.narrative.headline}</p>

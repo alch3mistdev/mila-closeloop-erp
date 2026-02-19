@@ -6,10 +6,22 @@ export type WaitlistSource =
   | "footer"
   | "query_param";
 
+export interface WaitlistScenarioSnapshot {
+  plantCount: number;
+  sourceSystems: string[];
+  validationCadence: "phase_gates" | "parallel_plus_post" | "go_live_only";
+  strictness: number;
+  highSeverityFindings: number;
+  readinessScore: number;
+  projectedAnnualValue: number;
+  projectedMonthlyValue: number;
+}
+
 export interface WaitlistEntry {
   email: string;
   source: WaitlistSource;
   submittedAt: string;
+  scenarioSnapshot?: WaitlistScenarioSnapshot;
 }
 
 export const WAITLIST_STORAGE_KEY = "erp_migration_waitlist_v1";
@@ -90,11 +102,16 @@ export interface UpsertWaitlistResult {
   duplicateUpdated: boolean;
 }
 
-export function upsertWaitlistEntry(email: string, source: WaitlistSource): UpsertWaitlistResult {
+export function upsertWaitlistEntry(
+  email: string,
+  source: WaitlistSource,
+  scenarioSnapshot?: WaitlistScenarioSnapshot
+): UpsertWaitlistResult {
   const entry: WaitlistEntry = {
     email: email.trim().toLowerCase(),
     source,
-    submittedAt: new Date().toISOString()
+    submittedAt: new Date().toISOString(),
+    scenarioSnapshot
   };
 
   const entries = readEntriesFromStorage();

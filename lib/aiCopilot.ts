@@ -1,4 +1,4 @@
-import { DiagnosticFinding } from "./demoEngine";
+import { DiagnosticFinding, ValidationCadence } from "./demoEngine";
 
 export interface MappingSuggestion {
   sourceField: string;
@@ -17,6 +17,16 @@ export interface PmoDraft {
 
 export type CopilotAudience = "CFO" | "PMO" | "Plant Controller";
 
+export interface CopilotScenarioContext {
+  plantCount: number;
+  sourceSystems: string[];
+  validationCadence: ValidationCadence;
+  strictness: number;
+  readinessScore: number;
+  projectedAnnualValue: number;
+  projectedMonthlyValue: number;
+}
+
 export interface CopilotNarrative {
   headline: string;
   executiveSummary: string;
@@ -31,6 +41,7 @@ export interface CopilotRequestPayload {
   reviewThreshold: number;
   suggestions: MappingSuggestion[];
   findings: DiagnosticFinding[];
+  scenario: CopilotScenarioContext;
 }
 
 export interface CopilotResponsePayload {
@@ -265,12 +276,20 @@ export function buildFallbackNarrative(payload: CopilotRequestPayload): CopilotN
         ? "Program risk is now operationally visible."
         : "Controller review burden can be materially reduced.";
 
+  const cadenceLabel =
+    payload.scenario.validationCadence === "parallel_plus_post"
+      ? "Parallel + Post"
+      : payload.scenario.validationCadence === "go_live_only"
+        ? "Go-live Only"
+        : "Phase Gates";
+
   return {
     headline: `AI Copilot flags ${flaggedMappings} mapping decisions requiring review`,
-    executiveSummary: `${audiencePrefix} The current scenario shows ${highSeverity} high-severity discrepancy cluster(s), with ${critical ? critical.category : "schema alignment"} as the most material risk theme.`,
+    executiveSummary: `${audiencePrefix} The current scenario (${payload.scenario.plantCount} plants, ${payload.scenario.sourceSystems.length} source systems, ${cadenceLabel}) shows ${highSeverity} high-severity discrepancy cluster(s), with ${critical ? critical.category : "schema alignment"} as the most material risk theme.`,
     persuasivePoints: [
       `AI triaged field mappings in seconds and isolated ${flaggedMappings} items below the ${payload.reviewThreshold}% confidence threshold.`,
       `Copilot translated technical discrepancies into owner-based remediation steps, reducing PMO coordination lag.`,
+      `At this scope, the demo model projects ${new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(payload.scenario.projectedAnnualValue)} annual value at stake with readiness ${payload.scenario.readinessScore}/100.`,
       "Generated language can be reused directly in checkpoint decks, design-partner outreach, and governance updates."
     ],
     objectionHandling:

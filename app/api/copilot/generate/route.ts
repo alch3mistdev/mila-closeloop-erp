@@ -11,6 +11,15 @@ export const dynamic = "force-dynamic";
 
 const OPENAI_API_URL = "https://api.openai.com/v1/chat/completions";
 const DEFAULT_MODEL = process.env.OPENAI_MODEL ?? "gpt-4.1-mini";
+const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
+const RATE_LIMIT_MAX = 18;
+
+interface RateBucket {
+  count: number;
+  resetAt: number;
+}
+
+const rateBuckets = new Map<string, RateBucket>();
 
 function stripCodeFences(text: string): string {
   return text.replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/, "").trim();
@@ -52,7 +61,11 @@ function normalizeRequestPayload(payload: CopilotRequestPayload): CopilotRequest
     audience: payload.audience,
     reviewThreshold: payload.reviewThreshold,
     suggestions: payload.suggestions.slice(0, 14),
-    findings: payload.findings.slice(0, 8)
+    findings: payload.findings.slice(0, 8),
+    scenario: {
+      ...payload.scenario,
+      sourceSystems: payload.scenario.sourceSystems.slice(0, 10)
+    }
   };
 }
 
@@ -75,7 +88,82 @@ function isValidPayload(payload: unknown): payload is CopilotRequestPayload {
     return false;
   }
 
+  if (!candidate.scenario || typeof candidate.scenario !== "object") {
+    return false;
+  }
+
+  const scenario = candidate.scenario as Partial<CopilotRequestPayload["scenario"]>;
+
+  if (
+    typeof scenario.plantCount !== "number" ||
+    !Array.isArray(scenario.sourceSystems) ||
+    typeof scenario.strictness !== "number" ||
+    typeof scenario.readinessScore !== "number" ||
+    typeof scenario.projectedAnnualValue !== "number" ||
+    typeof scenario.projectedMonthlyValue !== "number"
+  ) {
+    return false;
+  }
+
+  if (scenario.sourceSystems.some((item) => typeof item !== "string")) {
+    return false;
+  }
+
+  if (!["phase_gates", "parallel_plus_post", "go_live_only"].includes(scenario.validationCadence ?? "")) {
+    return false;
+  }
+
   return true;
+}
+
+function getClientIp(request: Request): string {
+  const forwarded = request.headers.get("x-forwarded-for");
+
+  if (forwarded) {
+    return forwarded.split(",")[0]?.trim() || "unknown";
+  }
+
+  const realIp = request.headers.get("x-real-ip");
+  return realIp?.trim() || "unknown";
+}
+
+function checkRateLimit(ip: string): { allowed: boolean; retryAfterSeconds: number } {
+  const now = Date.now();
+
+  for (const [key, bucket] of rateBuckets.entries()) {
+    if (bucket.resetAt <= now) {
+      rateBuckets.delete(key);
+    }
+  }
+
+  const current = rateBuckets.get(ip);
+
+  if (!current || current.resetAt <= now) {
+    rateBuckets.set(ip, {
+      count: 1,
+      resetAt: now + RATE_LIMIT_WINDOW_MS
+    });
+
+    return {
+      allowed: true,
+      retryAfterSeconds: Math.ceil(RATE_LIMIT_WINDOW_MS / 1000)
+    };
+  }
+
+  if (current.count >= RATE_LIMIT_MAX) {
+    return {
+      allowed: false,
+      retryAfterSeconds: Math.max(1, Math.ceil((current.resetAt - now) / 1000))
+    };
+  }
+
+  current.count += 1;
+  rateBuckets.set(ip, current);
+
+  return {
+    allowed: true,
+    retryAfterSeconds: Math.max(1, Math.ceil((current.resetAt - now) / 1000))
+  };
 }
 
 function buildUserPrompt(payload: CopilotRequestPayload): string {
@@ -86,6 +174,7 @@ function buildUserPrompt(payload: CopilotRequestPayload): string {
       {
         audience: payload.audience,
         reviewThreshold: payload.reviewThreshold,
+        scenario: payload.scenario,
         flaggedMappings: payload.suggestions.filter(
           (suggestion) => suggestion.confidence < payload.reviewThreshold
         ).length,
@@ -102,6 +191,23 @@ function buildUserPrompt(payload: CopilotRequestPayload): string {
 }
 
 export async function POST(request: Request) {
+  const ip = getClientIp(request);
+  const rateLimit = checkRateLimit(ip);
+
+  if (!rateLimit.allowed) {
+    return NextResponse.json(
+      {
+        warning: "Rate limit reached for AI generation. Please retry shortly."
+      },
+      {
+        status: 429,
+        headers: {
+          "Retry-After": String(rateLimit.retryAfterSeconds)
+        }
+      }
+    );
+  }
+
   let payload: CopilotRequestPayload;
 
   try {

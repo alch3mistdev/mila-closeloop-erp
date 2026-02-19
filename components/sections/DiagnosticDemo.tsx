@@ -2,17 +2,21 @@
 
 import { useEffect, useMemo, useState } from "react";
 import {
+  calculateReadinessScore,
   calculateRiskPressure,
+  DiagnosticFinding,
   getCadenceProfile,
   runDiagnostic,
   ValidationCadence
 } from "../../lib/demoEngine";
+import { SCENARIO_SOURCE_OPTIONS, SharedScenario } from "../../lib/scenarioModel";
 
 interface DiagnosticDemoProps {
-  onCta: () => void;
+  scenario: SharedScenario;
+  findings: DiagnosticFinding[];
+  onScenarioChange: (changes: Partial<SharedScenario>) => void;
+  onContinue: () => void;
 }
-
-const SOURCE_OPTIONS = ["SAP ECC", "Oracle", "Microsoft Dynamics", "AS/400", "Custom SQL", "Spreadsheets"];
 
 const CADENCE_OPTIONS: ValidationCadence[] = [
   "phase_gates",
@@ -20,71 +24,71 @@ const CADENCE_OPTIONS: ValidationCadence[] = [
   "go_live_only"
 ];
 
-export function DiagnosticDemo({ onCta }: DiagnosticDemoProps) {
-  const [selectedSources, setSelectedSources] = useState<string[]>(["SAP ECC", "Oracle", "Spreadsheets"]);
-  const [plantCount, setPlantCount] = useState(22);
-  const [strictness, setStrictness] = useState(95);
-  const [validationCadence, setValidationCadence] = useState<ValidationCadence>("phase_gates");
+export function DiagnosticDemo({ scenario, findings, onScenarioChange, onContinue }: DiagnosticDemoProps) {
   const [selectedFindingIndex, setSelectedFindingIndex] = useState(0);
-
-  const findings = useMemo(
-    () =>
-      runDiagnostic({
-        sourceSystems: selectedSources,
-        plantCount,
-        strictness: strictness / 100,
-        validationCadence
-      }),
-    [plantCount, selectedSources, strictness, validationCadence]
-  );
 
   useEffect(() => {
     setSelectedFindingIndex((current) => Math.min(current, Math.max(findings.length - 1, 0)));
   }, [findings.length]);
 
   function toggleSource(source: string) {
-    setSelectedSources((prev) => {
-      if (prev.includes(source)) {
-        if (prev.length === 1) {
-          return prev;
-        }
-
-        return prev.filter((item) => item !== source);
+    if (scenario.sourceSystems.includes(source)) {
+      if (scenario.sourceSystems.length === 1) {
+        return;
       }
 
-      return [...prev, source];
+      onScenarioChange({
+        sourceSystems: scenario.sourceSystems.filter((item) => item !== source)
+      });
+      return;
+    }
+
+    onScenarioChange({
+      sourceSystems: [...scenario.sourceSystems, source]
     });
   }
 
   const highSeverityCount = findings.filter((finding) => finding.severity === "high").length;
-  const mediumSeverityCount = findings.filter((finding) => finding.severity === "medium").length;
-  const readinessScore = Math.max(
-    41,
-    Math.round(
-      92 -
-        highSeverityCount * 11 -
-        mediumSeverityCount * 4 -
-        selectedSources.length * 1.5 -
-        (validationCadence === "go_live_only" ? 8 : 0) +
-        (validationCadence === "parallel_plus_post" ? 5 : 0)
-    )
+  const baselineHighSeverity = useMemo(
+    () =>
+      runDiagnostic({
+        sourceSystems: scenario.sourceSystems,
+        plantCount: scenario.plantCount,
+        strictness: scenario.strictness / 100,
+        validationCadence: "phase_gates"
+      }).filter((finding) => finding.severity === "high").length,
+    [scenario.plantCount, scenario.sourceSystems, scenario.strictness]
+  );
+  const readinessScore = calculateReadinessScore(
+    findings,
+    scenario.sourceSystems.length,
+    scenario.validationCadence
   );
 
-  const activeCadence = getCadenceProfile(validationCadence);
+  const activeCadence = getCadenceProfile(scenario.validationCadence);
   const activePressure = calculateRiskPressure({
-    sourceSystems: selectedSources,
-    plantCount,
-    strictness: strictness / 100,
-    validationCadence
+    sourceSystems: scenario.sourceSystems,
+    plantCount: scenario.plantCount,
+    strictness: scenario.strictness / 100,
+    validationCadence: scenario.validationCadence
   });
   const baselinePressure = calculateRiskPressure({
-    sourceSystems: selectedSources,
-    plantCount,
-    strictness: strictness / 100,
+    sourceSystems: scenario.sourceSystems,
+    plantCount: scenario.plantCount,
+    strictness: scenario.strictness / 100,
     validationCadence: "phase_gates"
   });
   const deltaVsBaseline = Math.round(((activePressure - baselinePressure) / baselinePressure) * 100);
   const selectedFinding = findings[selectedFindingIndex];
+  const highSeverityDelta = highSeverityCount - baselineHighSeverity;
+
+  const normalizedDelta = useMemo(() => {
+    if (!Number.isFinite(deltaVsBaseline)) {
+      return 0;
+    }
+
+    return deltaVsBaseline;
+  }, [deltaVsBaseline]);
 
   return (
     <section className="section" aria-labelledby="diagnostic-title" id="diagnostic-simulator">
@@ -96,8 +100,8 @@ export function DiagnosticDemo({ onCta }: DiagnosticDemoProps) {
         <article className="diagnostic-controls">
           <h3>1. Select source stack</h3>
           <div className="source-pills" role="group" aria-label="Source systems">
-            {SOURCE_OPTIONS.map((source) => {
-              const selected = selectedSources.includes(source);
+            {SCENARIO_SOURCE_OPTIONS.map((source) => {
+              const selected = scenario.sourceSystems.includes(source);
 
               return (
                 <button
@@ -114,15 +118,15 @@ export function DiagnosticDemo({ onCta }: DiagnosticDemoProps) {
           </div>
           <h3>2. Set plant scope</h3>
           <label htmlFor="plant-count-range" className="mono-label">
-            {plantCount} plants
+            {scenario.plantCount} plants
           </label>
           <input
             id="plant-count-range"
             type="range"
             min={5}
             max={100}
-            value={plantCount}
-            onChange={(event) => setPlantCount(Number(event.target.value))}
+            value={scenario.plantCount}
+            onChange={(event) => onScenarioChange({ plantCount: Number(event.target.value) })}
           />
           <h3>3. Pick validation cadence</h3>
           <div className="cadence-grid" role="group" aria-label="Validation cadence">
@@ -133,8 +137,8 @@ export function DiagnosticDemo({ onCta }: DiagnosticDemoProps) {
                 <button
                   key={cadence}
                   type="button"
-                  className={`cadence-card ${validationCadence === cadence ? "selected" : ""}`}
-                  onClick={() => setValidationCadence(cadence)}
+                  className={`cadence-card ${scenario.validationCadence === cadence ? "selected" : ""}`}
+                  onClick={() => onScenarioChange({ validationCadence: cadence })}
                 >
                   <span className="cadence-name">{profile.label}</span>
                   <span className="cadence-effect">{profile.effectLabel}</span>
@@ -151,22 +155,28 @@ export function DiagnosticDemo({ onCta }: DiagnosticDemoProps) {
             <p className="cadence-delta">
               Relative to Phase Gates baseline:{" "}
               <strong>
-                {deltaVsBaseline >= 0 ? "+" : ""}
-                {deltaVsBaseline}%
+                {normalizedDelta >= 0 ? "+" : ""}
+                {normalizedDelta}%
               </strong>{" "}
-              projected unresolved risk pressure.
+              projected unresolved risk pressure, with{" "}
+              <strong>
+                {highSeverityDelta >= 0 ? "+" : ""}
+                {highSeverityDelta}
+              </strong>{" "}
+              projected high-severity clusters.
             </p>
+            <p className="support-copy">Cadence directly affects pressure index, severity mix, and readiness score.</p>
           </div>
           <label htmlFor="strictness-range" className="mono-label">
-            Detection strictness: {strictness}%
+            Detection strictness: {scenario.strictness}%
           </label>
           <input
             id="strictness-range"
             type="range"
             min={70}
             max={130}
-            value={strictness}
-            onChange={(event) => setStrictness(Number(event.target.value))}
+            value={scenario.strictness}
+            onChange={(event) => onScenarioChange({ strictness: Number(event.target.value) })}
           />
           <p className="diagnostic-summary">
             High-severity flags projected: <strong>{highSeverityCount}</strong> | Readiness score:{" "}
@@ -175,8 +185,8 @@ export function DiagnosticDemo({ onCta }: DiagnosticDemoProps) {
           <p className="diagnostic-meta">
             Current risk pressure index: <strong>{Math.round(activePressure)}</strong>
           </p>
-          <button type="button" className="btn btn-primary" onClick={onCta}>
-            Convert this into my diagnostic
+          <button type="button" className="btn btn-secondary" onClick={onContinue}>
+            Continue to AI copilot with this scenario
           </button>
         </article>
 
