@@ -1,7 +1,13 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { buildPmoDraft, parseSourceFields, suggestMappings } from "../../lib/aiCopilot";
+import {
+  CopilotAudience,
+  CopilotResponsePayload,
+  buildPmoDraft,
+  parseSourceFields,
+  suggestMappings
+} from "../../lib/aiCopilot";
 import { runDiagnostic } from "../../lib/demoEngine";
 
 const TARGET_FIELDS = [
@@ -33,6 +39,10 @@ export function AICopilotDemo() {
   const [reviewThreshold, setReviewThreshold] = useState(80);
   const [selectedSuggestion, setSelectedSuggestion] = useState(0);
   const [showDraft, setShowDraft] = useState(false);
+  const [audience, setAudience] = useState<CopilotAudience>("CFO");
+  const [liveResult, setLiveResult] = useState<CopilotResponsePayload | null>(null);
+  const [liveError, setLiveError] = useState<string | null>(null);
+  const [isGenerating, setIsGenerating] = useState(false);
 
   const sourceFields = useMemo(() => parseSourceFields(sourceInput), [sourceInput]);
   const suggestions = useMemo(() => suggestMappings(sourceFields, TARGET_FIELDS), [sourceFields]);
@@ -58,6 +68,39 @@ export function AICopilotDemo() {
     setSelectedSuggestion((current) => Math.min(current, Math.max(0, suggestions.length - 1)));
   }, [suggestions.length]);
 
+  async function generateLiveNarrative() {
+    setIsGenerating(true);
+    setLiveError(null);
+
+    try {
+      const response = await fetch("/api/copilot/generate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          audience,
+          reviewThreshold,
+          suggestions,
+          findings: syntheticFindings
+        })
+      });
+
+      const payload = (await response.json()) as CopilotResponsePayload;
+
+      if (!response.ok) {
+        throw new Error(payload.warning ?? "Failed to generate AI narrative.");
+      }
+
+      setLiveResult(payload);
+      setShowDraft(false);
+    } catch (error) {
+      setLiveError(error instanceof Error ? error.message : "Failed to generate AI narrative.");
+    } finally {
+      setIsGenerating(false);
+    }
+  }
+
   return (
     <section className="section" aria-labelledby="ai-copilot-title" id="ai-copilot-demo">
       <div className="section-head" data-reveal="true">
@@ -68,7 +111,8 @@ export function AICopilotDemo() {
         <article className="ai-panel">
           <h3>1. Paste legacy field names</h3>
           <p className="support-copy">
-            Demo model runs fully in-browser. No source data leaves your session in this prototype.
+            Local heuristic mapping runs in-browser. Live OpenAI mode sends this simulated field list to your
+            server-side API route for generation.
           </p>
           <textarea
             className="field-input"
@@ -77,6 +121,8 @@ export function AICopilotDemo() {
               setSourceInput(event.target.value);
               setSelectedSuggestion(0);
               setShowDraft(false);
+              setLiveResult(null);
+              setLiveError(null);
             }}
             aria-label="Legacy source fields"
           />
@@ -135,13 +181,56 @@ export function AICopilotDemo() {
         </article>
 
         <article className="ai-panel pmo-panel">
-          <h3>3. Auto-draft PMO remediation update</h3>
+          <h3>3. Generate persuasive AI stakeholder narrative</h3>
           <p className="support-copy">
-            Copilot converts technical findings into an executive-ready update without manual rewriting.
+            Live generation turns technical mapping + discrepancy context into executive messaging, objection
+            handling, and a CTA-ready storyline.
           </p>
-          <button type="button" className="btn btn-secondary" onClick={() => setShowDraft((state) => !state)}>
-            {showDraft ? "Hide PMO draft" : "Generate PMO draft"}
-          </button>
+          <div className="audience-row">
+            {(["CFO", "PMO", "Plant Controller"] as CopilotAudience[]).map((candidate) => (
+              <button
+                key={candidate}
+                type="button"
+                className={`audience-chip ${audience === candidate ? "active" : ""}`}
+                onClick={() => setAudience(candidate)}
+              >
+                {candidate}
+              </button>
+            ))}
+          </div>
+          <div className="generation-actions">
+            <button type="button" className="btn btn-primary" onClick={generateLiveNarrative} disabled={isGenerating}>
+              {isGenerating ? "Generating..." : "Generate with OpenAI"}
+            </button>
+            <button type="button" className="btn btn-secondary" onClick={() => setShowDraft((state) => !state)}>
+              {showDraft ? "Hide baseline draft" : "Show baseline heuristic draft"}
+            </button>
+          </div>
+          {liveError ? <p className="live-error">{liveError}</p> : null}
+          {liveResult ? (
+            <div className="live-output">
+              <p className={`live-badge ${liveResult.mode}`}>
+                {liveResult.mode === "live" ? `Live OpenAI${liveResult.model ? ` (${liveResult.model})` : ""}` : "Fallback mode"}
+              </p>
+              {liveResult.warning ? <p className="support-copy">{liveResult.warning}</p> : null}
+              <p className="label">{liveResult.narrative.headline}</p>
+              <p>{liveResult.narrative.executiveSummary}</p>
+              <ul>
+                {liveResult.narrative.persuasivePoints.map((point) => (
+                  <li key={point}>{point}</li>
+                ))}
+              </ul>
+              <p>
+                <strong>Objection handling:</strong> {liveResult.narrative.objectionHandling}
+              </p>
+              <p>
+                <strong>Recommended CTA language:</strong> {liveResult.narrative.cta}
+              </p>
+              <p>
+                <strong>Suggested subject line:</strong> {liveResult.narrative.subjectLine}
+              </p>
+            </div>
+          ) : null}
           {showDraft ? (
             <div className="pmo-draft">
               <p className="label">{pmoDraft.headline}</p>

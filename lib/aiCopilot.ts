@@ -15,6 +15,31 @@ export interface PmoDraft {
   actions: string[];
 }
 
+export type CopilotAudience = "CFO" | "PMO" | "Plant Controller";
+
+export interface CopilotNarrative {
+  headline: string;
+  executiveSummary: string;
+  persuasivePoints: string[];
+  objectionHandling: string;
+  cta: string;
+  subjectLine: string;
+}
+
+export interface CopilotRequestPayload {
+  audience: CopilotAudience;
+  reviewThreshold: number;
+  suggestions: MappingSuggestion[];
+  findings: DiagnosticFinding[];
+}
+
+export interface CopilotResponsePayload {
+  mode: "live" | "fallback";
+  model?: string;
+  narrative: CopilotNarrative;
+  warning?: string;
+}
+
 const TOKEN_MAP: Record<string, string> = {
   acct: "account",
   account: "account",
@@ -215,5 +240,42 @@ export function buildPmoDraft(
     summary:
       "Copilot analysis indicates unresolved mapping ambiguity and discrepancy pressure that should be closed before migration sign-off.",
     actions
+  };
+}
+
+function topFinding(findings: DiagnosticFinding[]): DiagnosticFinding | null {
+  if (findings.length === 0) {
+    return null;
+  }
+
+  const severities = { high: 3, medium: 2, low: 1 };
+  return [...findings].sort((a, b) => severities[b.severity] - severities[a.severity])[0] ?? null;
+}
+
+export function buildFallbackNarrative(payload: CopilotRequestPayload): CopilotNarrative {
+  const flaggedMappings = payload.suggestions.filter(
+    (suggestion) => suggestion.confidence < payload.reviewThreshold
+  ).length;
+  const highSeverity = payload.findings.filter((finding) => finding.severity === "high").length;
+  const critical = topFinding(payload.findings);
+  const audiencePrefix =
+    payload.audience === "CFO"
+      ? "Financial reliability risk is now quantifiable."
+      : payload.audience === "PMO"
+        ? "Program risk is now operationally visible."
+        : "Controller review burden can be materially reduced.";
+
+  return {
+    headline: `AI Copilot flags ${flaggedMappings} mapping decisions requiring review`,
+    executiveSummary: `${audiencePrefix} The current scenario shows ${highSeverity} high-severity discrepancy cluster(s), with ${critical ? critical.category : "schema alignment"} as the most material risk theme.`,
+    persuasivePoints: [
+      `AI triaged field mappings in seconds and isolated ${flaggedMappings} items below the ${payload.reviewThreshold}% confidence threshold.`,
+      `Copilot translated technical discrepancies into owner-based remediation steps, reducing PMO coordination lag.`,
+      "Generated language can be reused directly in checkpoint decks, design-partner outreach, and governance updates."
+    ],
+    objectionHandling:
+      "This demo does not replace professional judgment. It accelerates analysis and communication so experts can focus on high-risk decisions, not formatting and manual triage.",
+    cta: "Run this against your real migration extracts and get a diagnostic-ready executive pack.",
+    subjectLine: `AI validation briefing: ${flaggedMappings} mappings require sign-off`
   };
 }
