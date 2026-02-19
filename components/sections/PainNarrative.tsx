@@ -1,0 +1,30 @@
+import { painCards } from "../../lib/content";
+
+interface PainNarrativeProps {
+  onCta: () => void;
+}
+
+export function PainNarrative({ onCta }: PainNarrativeProps) {
+  return (
+    <section className="section" aria-labelledby="pain-narrative-title">
+      <div className="section-head" data-reveal="true">
+        <p className="eyebrow">What Breaks In Real Programs</p>
+        <h2 id="pain-narrative-title">The migration risks your rollout plan usually underestimates</h2>
+      </div>
+      <div className="pain-grid" data-reveal="true">
+        {painCards.map((card) => (
+          <article className="pain-card" key={card.title}>
+            <p className="eyebrow small">{card.eyebrow}</p>
+            <h3>{card.title}</h3>
+            <p>{card.body}</p>
+          </article>
+        ))}
+      </div>
+      <div className="centered-row" data-reveal="true">
+        <button type="button" className="btn btn-primary" onClick={onCta}>
+          Run the interactive mini diagnostic
+        </button>
+      </div>
+    </section>
+  );
+}
