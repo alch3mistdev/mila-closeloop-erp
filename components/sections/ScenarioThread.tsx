@@ -61,6 +61,9 @@ export function ScenarioThread({
           <button type="button" className="text-link" onClick={() => onJump("diagnostic-simulator")}>
             Open diagnostic
           </button>
+          <button type="button" className="text-link" onClick={() => onJump("workflow-comparator")}>
+            Compare process flow
+          </button>
           <button type="button" className="text-link" onClick={() => onJump("savings-simulator")}>
             Stress-test economics
           </button>

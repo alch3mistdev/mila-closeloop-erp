@@ -202,7 +202,12 @@ export function HomePageClient() {
         projectedMonthlyValue={savingsModel.monthlySavings}
       />
       <ValuePillars />
-      <HowItWorks />
+      <HowItWorks
+        scenario={scenario}
+        findings={findings}
+        projectedAnnualValue={savingsModel.totalSavings}
+        onJumpToRoi={() => scrollToSection("savings-simulator")}
+      />
       <Credibility />
       <ROIFrame
         scenario={scenario}
