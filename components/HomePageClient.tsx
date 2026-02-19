@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { BrandLockup } from "./brand/BrandLockup";
+import { AICopilotDemo } from "./sections/AICopilotDemo";
 import { Credibility } from "./sections/Credibility";
 import { DiagnosticDemo } from "./sections/DiagnosticDemo";
 import { FinalCTA } from "./sections/FinalCTA";
@@ -90,8 +91,8 @@ export function HomePageClient() {
       <header className="top-rail">
         <BrandLockup compact />
         <div className="rail-actions">
-          <button type="button" className="text-link" onClick={() => scrollToSection("diagnostic-simulator")}>
-            Try simulation
+          <button type="button" className="text-link" onClick={() => scrollToSection("ai-copilot-demo")}>
+            Try AI copilot
           </button>
           <button type="button" className="btn btn-secondary" onClick={() => openWaitlist("sticky")}>
             Join waitlist
@@ -105,6 +106,7 @@ export function HomePageClient() {
       />
       <PainNarrative />
       <DiagnosticDemo onCta={() => openWaitlist("diagnostic")} />
+      <AICopilotDemo />
       <ValuePillars />
       <HowItWorks />
       <Credibility />
