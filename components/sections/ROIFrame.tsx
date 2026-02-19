@@ -183,13 +183,13 @@ export function ROIFrame({ scenario, onScenarioChange, onContinue }: ROIFramePro
               <span className="bar manual" style={{ width: `${Math.max(model.manualShare, 8)}%` }} />
               <span className="bar validated" style={{ width: `${Math.max(model.validatedShare, 4)}%` }} />
             </div>
-            <p className="support-copy">
-              Assumption model for demo purposes. Replace with customer benchmarks during discovery.
-            </p>
           </div>
           <button type="button" className="btn btn-secondary roi-cta" onClick={onContinue}>
             Continue to waitlist with this scenario
           </button>
+          <p className="roi-note">
+            Demo assumption model. Customer benchmarks replace these baselines during discovery.
+          </p>
         </article>
       </div>
     </section>

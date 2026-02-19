@@ -11,19 +11,21 @@ export function Hero({ onPrimaryCta, onExploreSimulator }: HeroProps) {
       <div className="hero-grid" data-reveal="true">
         <div>
           <BrandLockup />
-          <p className="eyebrow">Pre-Launch Design Partner Phase</p>
+          <p className="eyebrow">Early Access - Design Partner Cohort</p>
           <h1 className="hero-title">Your ERP migration passed go-live. Your data didn&apos;t.</h1>
           <p className="hero-subtitle">
-            Automated validation for heterogeneous-to-SAP migrations. Connect legacy and target
-            environments, surface discrepancies across plants before they become board-level reporting
-            errors, and track remediation to close.
+            Automated validation for heterogeneous-to-SAP migrations.
+          </p>
+          <p className="hero-subtitle hero-subtitle-secondary">
+            Connect source and target environments, surface cross-plant discrepancies early, and track
+            remediation before reporting confidence breaks.
           </p>
           <div className="cta-row">
             <button type="button" className="btn btn-primary" onClick={onPrimaryCta}>
               Request a Migration Diagnostic
             </button>
-            <button type="button" className="text-link" onClick={onExploreSimulator}>
-              Explore the interactive simulation first
+            <button type="button" className="btn btn-secondary hero-secondary" onClick={onExploreSimulator}>
+              Explore the Interactive Simulation
             </button>
           </div>
           <p className="support-line">

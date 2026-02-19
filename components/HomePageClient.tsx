@@ -11,6 +11,7 @@ import { HowItWorks } from "./sections/HowItWorks";
 import { PainNarrative } from "./sections/PainNarrative";
 import { ROIFrame } from "./sections/ROIFrame";
 import { ScenarioThread } from "./sections/ScenarioThread";
+import { SiteFooter } from "./sections/SiteFooter";
 import { ValuePillars } from "./sections/ValuePillars";
 import { WaitlistModal } from "./waitlist/WaitlistModal";
 import {
@@ -159,14 +160,15 @@ export function HomePageClient() {
       <header className="top-rail">
         <BrandLockup compact />
         <div className="rail-actions">
+          <span className="rail-context">Explore</span>
           <button type="button" className="text-link" onClick={() => scrollToSection("diagnostic-simulator")}>
-            Tune scenario
+            Interactive demo
           </button>
           <button type="button" className="text-link" onClick={() => scrollToSection("ai-copilot-demo")}>
-            Try AI copilot
+            AI workflow demo
           </button>
           <button type="button" className="text-link" onClick={() => scrollToSection("final-waitlist")}>
-            View waitlist
+            Join cohort
           </button>
         </div>
       </header>
@@ -175,6 +177,7 @@ export function HomePageClient() {
         onPrimaryCta={() => openWaitlist("hero")}
         onExploreSimulator={() => scrollToSection("diagnostic-simulator")}
       />
+      <PainNarrative />
       <ScenarioThread
         scenario={scenario}
         readinessScore={readinessScore}
@@ -182,7 +185,6 @@ export function HomePageClient() {
         projectedAnnualValue={savingsModel.totalSavings}
         onJump={scrollToSection}
       />
-      <PainNarrative />
       <DiagnosticDemo
         scenario={scenario}
         findings={findings}
@@ -208,6 +210,7 @@ export function HomePageClient() {
         onContinue={() => continueToWaitlist("midpage")}
       />
       <FinalCTA inlineSource={inlineSource} scenarioSnapshot={scenarioSnapshot} />
+      <SiteFooter />
 
       <button
         type="button"

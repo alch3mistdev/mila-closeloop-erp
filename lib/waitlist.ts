@@ -21,6 +21,7 @@ export interface WaitlistEntry {
   email: string;
   source: WaitlistSource;
   submittedAt: string;
+  reportedPlantCount?: number;
   scenarioSnapshot?: WaitlistScenarioSnapshot;
 }
 
@@ -105,12 +106,14 @@ export interface UpsertWaitlistResult {
 export function upsertWaitlistEntry(
   email: string,
   source: WaitlistSource,
-  scenarioSnapshot?: WaitlistScenarioSnapshot
+  scenarioSnapshot?: WaitlistScenarioSnapshot,
+  reportedPlantCount?: number
 ): UpsertWaitlistResult {
   const entry: WaitlistEntry = {
     email: email.trim().toLowerCase(),
     source,
     submittedAt: new Date().toISOString(),
+    reportedPlantCount,
     scenarioSnapshot
   };
 

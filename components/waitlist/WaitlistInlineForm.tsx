@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useId, useState } from "react";
+import { FormEvent, useEffect, useId, useState } from "react";
 import {
   WaitlistScenarioSnapshot,
   WaitlistSource,
@@ -32,14 +32,23 @@ export function WaitlistInlineForm({
   autoFocusEmail = false
 }: WaitlistInlineFormProps) {
   const [email, setEmail] = useState("");
+  const [plantCount, setPlantCount] = useState(
+    scenarioSnapshot ? String(scenarioSnapshot.plantCount) : ""
+  );
   const [status, setStatus] = useState<SubmissionState>({ type: "idle", message: "" });
   const generatedId = useId();
   const formId = `waitlist-${source}-${compact ? "compact" : "full"}-${generatedId}`;
+  const plantCountId = `${formId}-plants`;
+
+  useEffect(() => {
+    setPlantCount(scenarioSnapshot ? String(scenarioSnapshot.plantCount) : "");
+  }, [scenarioSnapshot, source]);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     const trimmedEmail = email.trim();
+    const trimmedPlantCount = plantCount.trim();
 
     if (!isValidEmail(trimmedEmail)) {
       setStatus({
@@ -49,7 +58,28 @@ export function WaitlistInlineForm({
       return;
     }
 
-    const result = upsertWaitlistEntry(trimmedEmail, source, scenarioSnapshot);
+    let normalizedPlantCount: number | undefined;
+
+    if (trimmedPlantCount) {
+      const parsed = Number(trimmedPlantCount);
+
+      if (!Number.isInteger(parsed) || parsed < 1 || parsed > 5000) {
+        setStatus({
+          type: "error",
+          message: "Plant count must be a whole number between 1 and 5000."
+        });
+        return;
+      }
+
+      normalizedPlantCount = parsed;
+    }
+
+    const result = upsertWaitlistEntry(
+      trimmedEmail,
+      source,
+      scenarioSnapshot,
+      normalizedPlantCount
+    );
 
     setStatus({
       type: "success",
@@ -92,6 +122,18 @@ export function WaitlistInlineForm({
           | readiness {scenarioSnapshot.readinessScore}/100
         </p>
       ) : null}
+      <label htmlFor={plantCountId}>How many plants are in your migration? (Optional)</label>
+      <input
+        id={plantCountId}
+        name="plantCount"
+        type="number"
+        min={1}
+        max={5000}
+        value={plantCount}
+        onChange={(event) => setPlantCount(event.target.value)}
+        placeholder="e.g. 24"
+        inputMode="numeric"
+      />
       <div className="form-status" aria-live="polite">
         {status.type !== "idle" ? <p className={status.type}>{status.message}</p> : null}
         {status.nonPersistent ? (

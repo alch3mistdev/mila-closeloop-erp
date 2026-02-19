@@ -16,6 +16,11 @@ export interface StoryInsight {
   summary: string;
 }
 
+export interface SocialProofQuote {
+  quote: string;
+  role: string;
+}
+
 export const painCards: PainCard[] = [
   {
     eyebrow: "Contrarian Truth",
@@ -101,5 +106,18 @@ export const storyInsights: StoryInsight[] = [
   {
     title: "PMO visibility gaps are systemic",
     summary: "Distributed ownership means status often reflects social reporting, not verified validation outcomes."
+  }
+];
+
+export const socialProofQuotes: SocialProofQuote[] = [
+  {
+    quote:
+      "We hit go-live, but margin still needed manual normalization plant-by-plant every month-end.",
+    role: "Plant Controller (anonymized, paraphrased discovery interview)"
+  },
+  {
+    quote:
+      "Our PMO dashboard said green, but data comparability was still red and nobody had a shared defect view.",
+    role: "Migration PMO Lead (anonymized, paraphrased discovery interview)"
   }
 ];

@@ -1,4 +1,4 @@
-import { credibilityPoints, storyInsights } from "../../lib/content";
+import { credibilityPoints, socialProofQuotes, storyInsights } from "../../lib/content";
 
 export function Credibility() {
   return (
@@ -14,6 +14,18 @@ export function Credibility() {
               <li key={point}>{point}</li>
             ))}
           </ul>
+          <p className="proof-note">
+            No public logos at pre-launch. Design-partner references are shared privately during
+            qualified discovery. Current intake focus is on 2026-2027 cutover programs.
+          </p>
+          <div className="proof-quotes" aria-label="Anonymized operator voice">
+            {socialProofQuotes.map((item) => (
+              <blockquote key={item.quote} className="proof-quote">
+                <p>&ldquo;{item.quote}&rdquo;</p>
+                <cite>{item.role}</cite>
+              </blockquote>
+            ))}
+          </div>
         </div>
         <div className="insights-panel">
           <h3>What we&apos;re seeing in the field</h3>

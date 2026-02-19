@@ -146,6 +146,11 @@ export function AICopilotDemo({
       <div className="section-head" data-reveal="true">
         <p className="eyebrow">AI Copilot Demo</p>
         <h2 id="ai-copilot-title">See how AI removes manual mapping and status-update busywork</h2>
+        <p className="support-copy">
+          Typical workflow: teams reconcile field mappings in spreadsheets, then manually rewrite
+          governance updates. This demo shows what AI automates versus what still requires controller
+          sign-off.
+        </p>
       </div>
       <div className="scenario-compact" data-reveal="true">
         <p className="label">Using shared scenario</p>
@@ -154,6 +159,22 @@ export function AICopilotDemo({
           {cadenceLabel(scenario.validationCadence)} | Readiness {readinessScore}/100 | Annual value at stake{" "}
           {currency(projectedAnnualValue)}
         </p>
+      </div>
+      <div className="ai-onramp" data-reveal="true">
+        <article>
+          <p className="label">Without copilot</p>
+          <p>
+            Analysts map legacy fields one-by-one, escalate uncertainty by email, and craft PMO
+            updates from scratch.
+          </p>
+        </article>
+        <article>
+          <p className="label">With copilot</p>
+          <p>
+            AI proposes mappings, flags low-confidence items for expert review, and drafts
+            audience-specific narratives from the same discrepancy context.
+          </p>
+        </article>
       </div>
       <div className="ai-impact-strip" data-reveal="true">
         <article>

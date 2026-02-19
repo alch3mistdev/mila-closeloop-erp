@@ -112,10 +112,19 @@ body {
   gap: 10px;
 }
 
+.rail-context {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.67rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-muted);
+}
+
 .section {
   width: min(1120px, calc(100% - 32px));
   margin: 0 auto;
-  padding: clamp(64px, 7vw, 100px) 0;
+  padding: clamp(38px, 4.8vw, 58px) 0;
 }
 
 .section-head {
@@ -171,6 +180,12 @@ body {
   max-width: 66ch;
   color: var(--ink-soft);
   font-size: clamp(1.02rem, 2vw, 1.18rem);
+}
+
+.hero-subtitle-secondary {
+  margin-top: 8px;
+  max-width: 62ch;
+  font-size: 1rem;
 }
 
 .hero {
@@ -295,6 +310,10 @@ textarea:focus-visible,
   font-size: 0.92rem;
 }
 
+.hero-secondary {
+  box-shadow: none;
+}
+
 .urgency-strip {
   margin-top: 28px;
   padding: 16px;
@@ -348,6 +367,10 @@ textarea:focus-visible,
 .scenario-grid article p {
   margin: 7px 0 0;
   color: var(--ink-soft);
+}
+
+.scenario-note {
+  font-size: 0.9rem;
 }
 
 .thread-actions {
@@ -615,6 +638,25 @@ input[type="range"] {
 
 .scenario-compact p {
   margin: 4px 0 0;
+  color: var(--ink-soft);
+}
+
+.ai-onramp {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.ai-onramp article {
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(95, 84, 71, 0.22);
+  background: rgba(255, 253, 248, 0.9);
+  padding: 12px;
+}
+
+.ai-onramp article p {
+  margin: 6px 0 0;
   color: var(--ink-soft);
 }
 
@@ -1008,6 +1050,39 @@ input[type="range"] {
   background: linear-gradient(120deg, var(--signal), var(--accent));
 }
 
+.proof-note {
+  margin: 14px 0 0;
+  color: var(--ink-muted);
+  font-size: 0.9rem;
+}
+
+.proof-quotes {
+  display: grid;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.proof-quote {
+  margin: 0;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(95, 84, 71, 0.2);
+  background: rgba(242, 233, 220, 0.4);
+  padding: 12px;
+}
+
+.proof-quote p {
+  margin: 0;
+  color: var(--ink-soft);
+}
+
+.proof-quote cite {
+  margin-top: 8px;
+  display: block;
+  color: var(--ink-muted);
+  font-size: 0.8rem;
+  font-style: normal;
+}
+
 .insights-panel h3 {
   margin-bottom: 12px;
 }
@@ -1162,8 +1237,16 @@ input[type="range"] {
   width: fit-content;
 }
 
+.roi-note {
+  grid-column: 1 / -1;
+  margin: 4px 0 0;
+  color: var(--ink-muted);
+  font-size: 0.82rem;
+}
+
 .final-cta {
-  padding-bottom: 130px;
+  padding-top: clamp(24px, 3.8vw, 36px);
+  padding-bottom: 104px;
 }
 
 .final-cta-grid {
@@ -1221,6 +1304,16 @@ input[type="range"] {
 .form-row input {
   flex: 1;
   min-width: 180px;
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid rgba(95, 84, 71, 0.35);
+  padding: 0 12px;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+}
+
+.waitlist-form > input[type="number"] {
+  width: 100%;
   height: 44px;
   border-radius: 12px;
   border: 1px solid rgba(95, 84, 71, 0.35);
@@ -1320,6 +1413,55 @@ input[type="range"] {
   pointer-events: auto;
 }
 
+.site-footer {
+  border-top: 1px solid rgba(95, 84, 71, 0.22);
+  background: rgba(255, 253, 248, 0.82);
+}
+
+.site-footer-inner {
+  width: min(1120px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 22px 0 34px;
+}
+
+.footer-brand {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.18rem;
+}
+
+.footer-copy,
+.footer-contact,
+.footer-meta {
+  margin: 8px 0 0;
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+}
+
+.footer-contact a,
+.site-footer nav a {
+  color: var(--signal);
+  text-decoration: none;
+}
+
+.site-footer nav {
+  margin-top: 10px;
+  display: flex;
+  gap: 14px;
+}
+
+.legal-page h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 4vw, 2.6rem);
+}
+
+.legal-page p {
+  margin: 14px 0 0;
+  max-width: 70ch;
+  color: var(--ink-soft);
+}
+
 [data-reveal="true"] {
   opacity: 0;
   transform: translateY(28px);
@@ -1347,6 +1489,7 @@ input[type="range"] {
   .scenario-grid,
   .hero-grid,
   .diagnostic-grid,
+  .ai-onramp,
   .ai-impact-strip,
   .ai-demo-grid,
   .roi-grid,
@@ -1384,7 +1527,7 @@ input[type="range"] {
 
   .section {
     width: min(1120px, calc(100% - 24px));
-    padding: 52px 0;
+    padding: 42px 0;
   }
 
   .btn {

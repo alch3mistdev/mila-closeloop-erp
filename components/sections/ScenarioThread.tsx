@@ -39,11 +39,14 @@ export function ScenarioThread({
     <section className="section scenario-thread" aria-label="Unified scenario">
       <div className="scenario-grid" data-reveal="true">
         <article>
-          <p className="label">Linked scenario</p>
+          <p className="label">Live shared scenario</p>
           <h3>{scenario.plantCount} plants across {scenario.sourceSystems.length} source systems</h3>
           <p>
             Cadence: <strong>{cadenceLabel(scenario.validationCadence)}</strong> | Detection strictness:{" "}
             <strong>{scenario.strictness}%</strong>
+          </p>
+          <p className="scenario-note">
+            Any changes in the demo below update this scenario and all downstream AI + savings outputs.
           </p>
         </article>
         <article>
@@ -56,10 +59,7 @@ export function ScenarioThread({
         </article>
         <div className="thread-actions">
           <button type="button" className="text-link" onClick={() => onJump("diagnostic-simulator")}>
-            Tune diagnostic
-          </button>
-          <button type="button" className="text-link" onClick={() => onJump("ai-copilot-demo")}>
-            See AI output
+            Open diagnostic
           </button>
           <button type="button" className="text-link" onClick={() => onJump("savings-simulator")}>
             Stress-test economics
