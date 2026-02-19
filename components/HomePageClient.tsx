@@ -12,6 +12,7 @@ import { PainNarrative } from "./sections/PainNarrative";
 import { ROIFrame } from "./sections/ROIFrame";
 import { ScenarioThread } from "./sections/ScenarioThread";
 import { SiteFooter } from "./sections/SiteFooter";
+import { TrustCenter } from "./sections/TrustCenter";
 import { ValuePillars } from "./sections/ValuePillars";
 import { WaitlistModal } from "./waitlist/WaitlistModal";
 import {
@@ -160,9 +161,11 @@ export function HomePageClient() {
       <header className="top-rail">
         <BrandLockup compact />
         <div className="rail-actions">
-          <span className="rail-context">Explore</span>
           <button type="button" className="text-link" onClick={() => scrollToSection("diagnostic-simulator")}>
             Interactive demo
+          </button>
+          <button type="button" className="text-link" onClick={() => scrollToSection("workflow-comparator")}>
+            Process flow
           </button>
           <button type="button" className="text-link" onClick={() => scrollToSection("ai-copilot-demo")}>
             AI workflow demo
@@ -209,6 +212,7 @@ export function HomePageClient() {
         onJumpToRoi={() => scrollToSection("savings-simulator")}
       />
       <Credibility />
+      <TrustCenter onJumpToWaitlist={() => continueToWaitlist("midpage")} />
       <ROIFrame
         scenario={scenario}
         onScenarioChange={updateScenario}
