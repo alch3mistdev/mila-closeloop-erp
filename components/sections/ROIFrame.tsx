@@ -185,7 +185,7 @@ export function ROIFrame({ scenario, onScenarioChange, onContinue }: ROIFramePro
             </div>
           </div>
           <button type="button" className="btn btn-secondary roi-cta" onClick={onContinue}>
-            Continue to waitlist with this scenario
+            Talk to us about diagnostic pricing for this environment
           </button>
           <p className="roi-note">
             Demo assumption model. Customer benchmarks replace these baselines during discovery.

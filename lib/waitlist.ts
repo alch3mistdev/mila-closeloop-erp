@@ -22,6 +22,8 @@ export interface WaitlistEntry {
   source: WaitlistSource;
   submittedAt: string;
   reportedPlantCount?: number;
+  companySize?: string;
+  migrationTimeline?: string;
   scenarioSnapshot?: WaitlistScenarioSnapshot;
 }
 
@@ -103,18 +105,26 @@ export interface UpsertWaitlistResult {
   duplicateUpdated: boolean;
 }
 
+export interface WaitlistIntakeDetails {
+  scenarioSnapshot?: WaitlistScenarioSnapshot;
+  reportedPlantCount?: number;
+  companySize?: string;
+  migrationTimeline?: string;
+}
+
 export function upsertWaitlistEntry(
   email: string,
   source: WaitlistSource,
-  scenarioSnapshot?: WaitlistScenarioSnapshot,
-  reportedPlantCount?: number
+  details?: WaitlistIntakeDetails
 ): UpsertWaitlistResult {
   const entry: WaitlistEntry = {
     email: email.trim().toLowerCase(),
     source,
     submittedAt: new Date().toISOString(),
-    reportedPlantCount,
-    scenarioSnapshot
+    reportedPlantCount: details?.reportedPlantCount,
+    companySize: details?.companySize,
+    migrationTimeline: details?.migrationTimeline,
+    scenarioSnapshot: details?.scenarioSnapshot
   };
 
   const entries = readEntriesFromStorage();

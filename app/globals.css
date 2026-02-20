@@ -253,6 +253,9 @@ body {
 }
 
 .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border: 0;
   border-radius: 999px;
   font-family: var(--font-sans);
@@ -260,10 +263,12 @@ body {
   cursor: pointer;
   letter-spacing: 0.01em;
   transition: transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
+  text-decoration: none;
 }
 
 .btn:focus-visible,
 input:focus-visible,
+select:focus-visible,
 textarea:focus-visible,
 .source-pill:focus-visible,
 .cadence-card:focus-visible,
@@ -304,6 +309,10 @@ textarea:focus-visible,
 
 .hero-secondary {
   box-shadow: none;
+}
+
+.hero-tertiary {
+  margin-top: 12px;
 }
 
 .urgency-strip {
@@ -1172,7 +1181,7 @@ input[type="range"] {
 
 .trust-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
 }
 
@@ -1458,6 +1467,16 @@ input[type="range"] {
   color: rgba(248, 246, 242, 0.88);
 }
 
+.final-cta-points {
+  margin: 12px 0 0;
+  padding-left: 18px;
+  color: rgba(248, 246, 242, 0.88);
+}
+
+.final-cta-points li + li {
+  margin-top: 7px;
+}
+
 .final-cta .eyebrow {
   color: #7ad3d3;
 }
@@ -1513,6 +1532,18 @@ input[type="range"] {
   padding: 0 12px;
   font-family: var(--font-sans);
   font-size: 1rem;
+}
+
+.waitlist-form > select {
+  width: 100%;
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid rgba(95, 84, 71, 0.35);
+  padding: 0 12px;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  background: #fff;
+  color: var(--ink);
 }
 
 .meta-line {
@@ -1655,6 +1686,40 @@ input[type="range"] {
   color: var(--ink-soft);
 }
 
+.checklist-page h1 {
+  max-width: 24ch;
+}
+
+.checklist-grid {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.checklist-card {
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(95, 84, 71, 0.24);
+  background: rgba(255, 253, 248, 0.93);
+  padding: 14px;
+}
+
+.checklist-card h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+}
+
+.checklist-card ol {
+  margin: 10px 0 0;
+  padding-left: 18px;
+  color: var(--ink-soft);
+}
+
+.checklist-card li + li {
+  margin-top: 6px;
+}
+
 [data-reveal="true"] {
   opacity: 0;
   transform: translateY(28px);
@@ -1712,6 +1777,7 @@ input[type="range"] {
   .workflow-lanes,
   .workflow-detail-grid,
   .trust-grid,
+  .checklist-grid,
   .roi-grid,
   .credibility-layout,
   .final-cta-grid {

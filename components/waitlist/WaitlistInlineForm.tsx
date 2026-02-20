@@ -35,13 +35,19 @@ export function WaitlistInlineForm({
   const [plantCount, setPlantCount] = useState(
     scenarioSnapshot ? String(scenarioSnapshot.plantCount) : ""
   );
+  const [companySize, setCompanySize] = useState("");
+  const [migrationTimeline, setMigrationTimeline] = useState("");
   const [status, setStatus] = useState<SubmissionState>({ type: "idle", message: "" });
   const generatedId = useId();
   const formId = `waitlist-${source}-${compact ? "compact" : "full"}-${generatedId}`;
   const plantCountId = `${formId}-plants`;
+  const companySizeId = `${formId}-company-size`;
+  const timelineId = `${formId}-timeline`;
 
   useEffect(() => {
     setPlantCount(scenarioSnapshot ? String(scenarioSnapshot.plantCount) : "");
+    setCompanySize("");
+    setMigrationTimeline("");
   }, [scenarioSnapshot, source]);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -74,12 +80,12 @@ export function WaitlistInlineForm({
       normalizedPlantCount = parsed;
     }
 
-    const result = upsertWaitlistEntry(
-      trimmedEmail,
-      source,
+    const result = upsertWaitlistEntry(trimmedEmail, source, {
       scenarioSnapshot,
-      normalizedPlantCount
-    );
+      reportedPlantCount: normalizedPlantCount,
+      companySize: companySize || undefined,
+      migrationTimeline: migrationTimeline || undefined
+    });
 
     setStatus({
       type: "success",
@@ -134,6 +140,31 @@ export function WaitlistInlineForm({
         placeholder="e.g. 24"
         inputMode="numeric"
       />
+      <label htmlFor={companySizeId}>Company size (Optional)</label>
+      <select
+        id={companySizeId}
+        name="companySize"
+        value={companySize}
+        onChange={(event) => setCompanySize(event.target.value)}
+      >
+        <option value="">Select size</option>
+        <option value="1000-4999">1,000-4,999 employees</option>
+        <option value="5000-9999">5,000-9,999 employees</option>
+        <option value="10000-plus">10,000+ employees</option>
+      </select>
+      <label htmlFor={timelineId}>Migration timeline (Optional)</label>
+      <select
+        id={timelineId}
+        name="migrationTimeline"
+        value={migrationTimeline}
+        onChange={(event) => setMigrationTimeline(event.target.value)}
+      >
+        <option value="">Select timeline</option>
+        <option value="active-now">Active S/4 program now</option>
+        <option value="0-6-months">Starting in 0-6 months</option>
+        <option value="6-18-months">Starting in 6-18 months</option>
+        <option value="exploratory">Exploring / assessing</option>
+      </select>
       <div className="form-status" aria-live="polite">
         {status.type !== "idle" ? <p className={status.type}>{status.message}</p> : null}
         {status.nonPersistent ? (

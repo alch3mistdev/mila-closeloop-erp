@@ -5,7 +5,7 @@ export function ValuePillars() {
     <section className="section" aria-labelledby="pillar-title">
       <div className="section-head" data-reveal="true">
         <p className="eyebrow">Value Framework</p>
-        <h2 id="pillar-title">Four validation pillars built for multi-plant migrations</h2>
+        <h2 id="pillar-title">Five validation pillars built for multi-plant migrations</h2>
       </div>
       <div className="pillar-grid" data-reveal="true">
         {valuePillars.map((pillar) => (

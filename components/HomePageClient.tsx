@@ -167,8 +167,8 @@ export function HomePageClient() {
           <button type="button" className="text-link" onClick={() => scrollToSection("workflow-comparator")}>
             Process flow
           </button>
-          <button type="button" className="text-link" onClick={() => scrollToSection("ai-copilot-demo")}>
-            AI workflow demo
+          <button type="button" className="text-link" onClick={() => scrollToSection("trust-center")}>
+            Trust & security
           </button>
           <button type="button" className="text-link" onClick={() => scrollToSection("final-waitlist")}>
             Join cohort

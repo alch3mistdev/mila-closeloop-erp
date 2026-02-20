@@ -18,18 +18,23 @@ export function Hero({ onPrimaryCta, onExploreSimulator }: HeroProps) {
           </p>
           <p className="hero-subtitle hero-subtitle-secondary">
             Connect source and target environments, surface cross-plant discrepancies early, and track
-            remediation before reporting confidence breaks.
+            remediation before reporting confidence breaks. Full platform capabilities are available to
+            design partners.
           </p>
           <div className="cta-row">
             <button type="button" className="btn btn-primary" onClick={onPrimaryCta}>
               Request a Migration Diagnostic
             </button>
-            <button type="button" className="btn btn-secondary hero-secondary" onClick={onExploreSimulator}>
-              Explore the Interactive Simulation
-            </button>
+            <a className="btn btn-secondary hero-secondary" href="/resources/erp-migration-validation-checklist">
+              Download the Validation Checklist
+            </a>
           </div>
+          <button type="button" className="text-link hero-tertiary" onClick={onExploreSimulator}>
+            Explore the interactive simulation first
+          </button>
           <p className="support-line">
-            Free diagnostic scope: up to 3 source systems. No production-system write access required.
+            Free diagnostic scope: one source system + one key data domain. Target turnaround: 10 business
+            days after receiving extracts. No production-system write access required.
           </p>
         </div>
         <aside className="hero-aside" aria-label="Migration pressure indicators">

@@ -84,6 +84,15 @@ export const valuePillars: Pillar[] = [
       "Field-by-field mapping consumes weeks and often breaks under institutional knowledge gaps.",
     after:
       "Confidence-scored mapping suggestions reduce manual effort and isolate uncertain pairs for human review."
+  },
+  {
+    title: "Audit-Ready Validation Trail",
+    description:
+      "Generate evidence-grade outputs for what was checked, what failed, and what was remediated at each phase gate.",
+    before:
+      "Validation evidence lives in fragmented spreadsheets and email threads with weak audit defensibility.",
+    after:
+      "Timestamped validation runs and approval history provide a defensible trail for finance leadership and auditors."
   }
 ];
 
