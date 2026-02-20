@@ -1,0 +1,81 @@
+<svg width="1080" height="1080" viewBox="0 0 1080 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <clipPath id="rounded"><rect width="1080" height="1080" rx="20"/></clipPath>
+  </defs>
+  <g clip-path="url(#rounded)">
+    <!-- Background: dark teal -->
+    <rect width="1080" height="1080" fill="#005E66"/>
+
+    <!-- Step number -->
+    <text x="80" y="130" fill="#E84E1B" font-family="Georgia, 'Iowan Old Style', Palatino, serif" font-size="80" font-weight="700" opacity="0.3">02</text>
+
+    <!-- Section label -->
+    <text x="80" y="180" fill="#ffffff" font-family="'IBM Plex Mono', 'SFMono-Regular', Menlo, monospace" font-size="20" letter-spacing="4" font-weight="600">WHAT WE CHECK</text>
+
+    <!-- Separator -->
+    <rect x="80" y="200" width="60" height="4" rx="2" fill="#E84E1B"/>
+
+    <!-- Validation checkpoint 1: Schema Mapping -->
+    <g transform="translate(80, 280)">
+      <rect width="920" height="130" rx="16" fill="#ffffff" opacity="0.08"/>
+      <!-- Check circle -->
+      <circle cx="65" cy="65" r="28" fill="#E84E1B" opacity="0.9"/>
+      <text x="54" y="75" fill="#ffffff" font-family="sans-serif" font-size="28" font-weight="700">&#10003;</text>
+      <!-- Label -->
+      <text x="115" y="50" fill="#ffffff" font-family="Georgia, Palatino, serif" font-size="32" font-weight="700">Schema Mapping</text>
+      <text x="115" y="85" fill="#ffffff" font-family="'Avenir Next', sans-serif" font-size="20" opacity="0.6">Are all source fields accounted for in the target?</text>
+      <!-- Confidence bar -->
+      <rect x="115" y="100" width="400" height="6" rx="3" fill="#ffffff" opacity="0.1"/>
+      <rect x="115" y="100" width="340" height="6" rx="3" fill="#E84E1B" opacity="0.7"/>
+      <text x="530" y="110" fill="#ffffff" font-family="'IBM Plex Mono', monospace" font-size="13" opacity="0.5">85%</text>
+    </g>
+
+    <!-- Validation checkpoint 2: Data Completeness -->
+    <g transform="translate(80, 430)">
+      <rect width="920" height="130" rx="16" fill="#ffffff" opacity="0.08"/>
+      <circle cx="65" cy="65" r="28" fill="#E84E1B" opacity="0.9"/>
+      <text x="54" y="75" fill="#ffffff" font-family="sans-serif" font-size="28" font-weight="700">&#10003;</text>
+      <text x="115" y="50" fill="#ffffff" font-family="Georgia, Palatino, serif" font-size="32" font-weight="700">Data Completeness</text>
+      <text x="115" y="85" fill="#ffffff" font-family="'Avenir Next', sans-serif" font-size="20" opacity="0.6">Are all records migrated without duplication or loss?</text>
+      <rect x="115" y="100" width="400" height="6" rx="3" fill="#ffffff" opacity="0.1"/>
+      <rect x="115" y="100" width="380" height="6" rx="3" fill="#275928" opacity="0.7"/>
+      <text x="530" y="110" fill="#ffffff" font-family="'IBM Plex Mono', monospace" font-size="13" opacity="0.5">95%</text>
+    </g>
+
+    <!-- Validation checkpoint 3: Value Range Validation -->
+    <g transform="translate(80, 580)">
+      <rect width="920" height="130" rx="16" fill="#ffffff" opacity="0.08"/>
+      <circle cx="65" cy="65" r="28" fill="#E84E1B" opacity="0.9"/>
+      <text x="54" y="75" fill="#ffffff" font-family="sans-serif" font-size="28" font-weight="700">&#10003;</text>
+      <text x="115" y="50" fill="#ffffff" font-family="Georgia, Palatino, serif" font-size="32" font-weight="700">Value Range Validation</text>
+      <text x="115" y="85" fill="#ffffff" font-family="'Avenir Next', sans-serif" font-size="20" opacity="0.6">Do migrated values fall within expected bounds?</text>
+      <rect x="115" y="100" width="400" height="6" rx="3" fill="#ffffff" opacity="0.1"/>
+      <rect x="115" y="100" width="290" height="6" rx="3" fill="#8f5a00" opacity="0.7"/>
+      <text x="530" y="110" fill="#ffffff" font-family="'IBM Plex Mono', monospace" font-size="13" opacity="0.5">72%</text>
+    </g>
+
+    <!-- Validation checkpoint 4: Cross-Plant Consistency -->
+    <g transform="translate(80, 730)">
+      <rect width="920" height="130" rx="16" fill="#ffffff" opacity="0.08"/>
+      <circle cx="65" cy="65" r="28" fill="#E84E1B" opacity="0.9"/>
+      <text x="54" y="75" fill="#ffffff" font-family="sans-serif" font-size="28" font-weight="700">&#10003;</text>
+      <text x="115" y="50" fill="#ffffff" font-family="Georgia, Palatino, serif" font-size="32" font-weight="700">Cross-Plant Consistency</text>
+      <text x="115" y="85" fill="#ffffff" font-family="'Avenir Next', sans-serif" font-size="20" opacity="0.6">Do plants calculating the same metric produce comparable results?</text>
+      <rect x="115" y="100" width="400" height="6" rx="3" fill="#ffffff" opacity="0.1"/>
+      <rect x="115" y="100" width="240" height="6" rx="3" fill="#A52323" opacity="0.7"/>
+      <text x="530" y="110" fill="#ffffff" font-family="'IBM Plex Mono', monospace" font-size="13" opacity="0.5">60%</text>
+    </g>
+
+    <!-- Bottom text -->
+    <text x="80" y="950" fill="#ffffff" font-family="Georgia, Palatino, serif" font-size="36" font-weight="700">Automated, not manual.</text>
+    <text x="80" y="990" fill="#ffffff" font-family="'Avenir Next', sans-serif" font-size="22" opacity="0.5">Four dimensions of validation at every phase gate.</text>
+
+    <!-- Brand mark -->
+    <g transform="translate(900, 1000)">
+      <rect width="36" height="36" rx="10" fill="#f7f3ea" stroke="#c9b9a5" stroke-width="0.8"/>
+      <path d="M8 13h6c3 0 5.4 2.4 5.4 5.4v0c0 3-2.4 5.4-5.4 5.4H8V13z" fill="#005e66"/>
+      <path d="M28 23h-6c-3 0-5.4-2.4-5.4-5.4v0c0-3 2.4-5.4 5.4-5.4H28V23z" fill="#e84e1b"/>
+      <circle cx="26.4" cy="18" r="1.8" fill="#f7f3ea"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,94 @@
+<svg width="1080" height="1080" viewBox="0 0 1080 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <clipPath id="rounded"><rect width="1080" height="1080" rx="20"/></clipPath>
+  </defs>
+  <g clip-path="url(#rounded)">
+    <!-- Background: warm beige -->
+    <rect width="1080" height="1080" fill="#F1EEE8"/>
+
+    <!-- Step number -->
+    <text x="80" y="130" fill="#E84E1B" font-family="Georgia, 'Iowan Old Style', Palatino, serif" font-size="80" font-weight="700" opacity="0.2">01</text>
+
+    <!-- Section label -->
+    <text x="80" y="180" fill="#005E66" font-family="'IBM Plex Mono', 'SFMono-Regular', Menlo, monospace" font-size="20" letter-spacing="4" font-weight="600">THE PROBLEM</text>
+
+    <!-- Separator -->
+    <rect x="80" y="200" width="60" height="4" rx="2" fill="#E84E1B"/>
+
+    <!-- Visual: scattered source system blocks converging on SAP target -->
+    <g transform="translate(80, 260)">
+      <!-- Source system blocks: scattered, different sizes -->
+      <!-- Oracle -->
+      <g transform="rotate(-4, 100, 50)">
+        <rect x="0" y="20" width="220" height="70" rx="12" fill="#005E66" opacity="0.12" stroke="#005E66" stroke-width="1.5"/>
+        <text x="20" y="62" fill="#005E66" font-family="'IBM Plex Mono', monospace" font-size="18" font-weight="600">Oracle ERP</text>
+        <circle cx="195" cy="55" r="10" fill="#A52323" opacity="0.6"/>
+      </g>
+
+      <!-- SAP ECC -->
+      <g transform="rotate(2, 600, 30)">
+        <rect x="480" y="0" width="220" height="70" rx="12" fill="#005E66" opacity="0.12" stroke="#005E66" stroke-width="1.5"/>
+        <text x="500" y="42" fill="#005E66" font-family="'IBM Plex Mono', monospace" font-size="18" font-weight="600">SAP ECC</text>
+        <circle cx="675" cy="35" r="10" fill="#A52323" opacity="0.6"/>
+      </g>
+
+      <!-- AS/400 -->
+      <g transform="rotate(-2, 300, 150)">
+        <rect x="260" y="115" width="220" height="70" rx="12" fill="#005E66" opacity="0.12" stroke="#005E66" stroke-width="1.5"/>
+        <text x="280" y="157" fill="#005E66" font-family="'IBM Plex Mono', monospace" font-size="18" font-weight="600">AS/400 Custom</text>
+        <circle cx="455" cy="150" r="10" fill="#A52323" opacity="0.6"/>
+      </g>
+
+      <!-- Excel -->
+      <g transform="rotate(3, 100, 230)">
+        <rect x="30" y="200" width="200" height="70" rx="12" fill="#005E66" opacity="0.12" stroke="#005E66" stroke-width="1.5"/>
+        <text x="50" y="242" fill="#005E66" font-family="'IBM Plex Mono', monospace" font-size="18" font-weight="600">Excel Reports</text>
+        <circle cx="205" cy="235" r="10" fill="#8f5a00" opacity="0.6"/>
+      </g>
+
+      <!-- Dynamics -->
+      <g transform="rotate(-3, 650, 210)">
+        <rect x="540" y="180" width="260" height="70" rx="12" fill="#005E66" opacity="0.12" stroke="#005E66" stroke-width="1.5"/>
+        <text x="560" y="222" fill="#005E66" font-family="'IBM Plex Mono', monospace" font-size="18" font-weight="600">MS Dynamics</text>
+        <circle cx="775" cy="215" r="10" fill="#A52323" opacity="0.6"/>
+      </g>
+
+      <!-- NetSuite -->
+      <g transform="rotate(1, 350, 320)">
+        <rect x="300" y="300" width="230" height="70" rx="12" fill="#005E66" opacity="0.12" stroke="#005E66" stroke-width="1.5"/>
+        <text x="320" y="342" fill="#005E66" font-family="'IBM Plex Mono', monospace" font-size="18" font-weight="600">NetSuite</text>
+        <circle cx="505" cy="335" r="10" fill="#8f5a00" opacity="0.6"/>
+      </g>
+
+      <!-- Arrows converging to target -->
+      <line x1="220" y1="60" x2="410" y2="460" stroke="#005E66" stroke-width="1.5" opacity="0.2" stroke-dasharray="6,4"/>
+      <line x1="590" y1="70" x2="500" y2="460" stroke="#005E66" stroke-width="1.5" opacity="0.2" stroke-dasharray="6,4"/>
+      <line x1="370" y1="185" x2="450" y2="460" stroke="#005E66" stroke-width="1.5" opacity="0.2" stroke-dasharray="6,4"/>
+      <line x1="130" y1="270" x2="420" y2="460" stroke="#005E66" stroke-width="1.5" opacity="0.2" stroke-dasharray="6,4"/>
+      <line x1="670" y1="250" x2="530" y2="460" stroke="#005E66" stroke-width="1.5" opacity="0.2" stroke-dasharray="6,4"/>
+      <line x1="415" y1="370" x2="460" y2="460" stroke="#005E66" stroke-width="1.5" opacity="0.2" stroke-dasharray="6,4"/>
+
+      <!-- Target: SAP S/4HANA -->
+      <rect x="340" y="460" width="240" height="80" rx="14" fill="#005E66" stroke="#005E66" stroke-width="2"/>
+      <text x="380" y="508" fill="#ffffff" font-family="'IBM Plex Mono', monospace" font-size="20" font-weight="700">SAP S/4HANA</text>
+    </g>
+
+    <!-- Stat callout -->
+    <text x="80" y="850" fill="#151311" font-family="Georgia, 'Iowan Old Style', Palatino, serif" font-size="44" font-weight="700">
+      <tspan x="80" dy="0">6 plants. 4 legacy systems.</tspan>
+      <tspan x="80" dy="56">1 target.</tspan>
+    </text>
+
+    <!-- Subtext -->
+    <text x="80" y="960" fill="#655C53" font-family="'Avenir Next', sans-serif" font-size="22" opacity="0.7">Your consolidated report is only as good as</text>
+    <text x="80" y="988" fill="#655C53" font-family="'Avenir Next', sans-serif" font-size="22" opacity="0.7">your worst source system.</text>
+
+    <!-- Brand mark -->
+    <g transform="translate(900, 1000)">
+      <rect width="36" height="36" rx="10" fill="#f7f3ea" stroke="#c9b9a5" stroke-width="0.8"/>
+      <path d="M8 13h6c3 0 5.4 2.4 5.4 5.4v0c0 3-2.4 5.4-5.4 5.4H8V13z" fill="#005e66"/>
+      <path d="M28 23h-6c-3 0-5.4-2.4-5.4-5.4v0c0-3 2.4-5.4 5.4-5.4H28V23z" fill="#e84e1b"/>
+      <circle cx="26.4" cy="18" r="1.8" fill="#f7f3ea"/>
+    </g>
+  </g>
+</svg>

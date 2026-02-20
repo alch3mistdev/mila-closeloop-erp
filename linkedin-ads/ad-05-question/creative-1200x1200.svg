@@ -1,0 +1,73 @@
+<svg width="1200" height="1200" viewBox="0 0 1200 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <clipPath id="rounded"><rect width="1200" height="1200" rx="24"/></clipPath>
+  </defs>
+  <g clip-path="url(#rounded)">
+    <!-- Background: warm beige -->
+    <rect width="1200" height="1200" fill="#F1EEE8"/>
+
+    <!-- Subtle teal accent corner -->
+    <circle cx="1200" cy="0" r="300" fill="#005E66" opacity="0.04"/>
+
+    <!-- Large question mark: teal, dominant visual -->
+    <text x="600" y="440" text-anchor="middle" fill="#005E66" font-family="Georgia, 'Iowan Old Style', 'Palatino Linotype', Palatino, serif" font-size="380" font-weight="700" opacity="0.12">?</text>
+
+    <!-- Eyebrow -->
+    <text x="100" y="120" fill="#655C53" font-family="'IBM Plex Mono', 'SFMono-Regular', Menlo, Consolas, monospace" font-size="22" letter-spacing="4" font-weight="500">POST-MIGRATION SELF-ASSESSMENT</text>
+
+    <!-- Headline question -->
+    <text x="100" y="310" fill="#151311" font-family="Georgia, 'Iowan Old Style', 'Palatino Linotype', Palatino, serif" font-size="68" font-weight="700">
+      <tspan x="100" dy="0">Can You Trust</tspan>
+      <tspan x="100" dy="85">Your Migrated</tspan>
+      <tspan x="100" dy="85">Data?</tspan>
+    </text>
+
+    <!-- Separator -->
+    <rect x="100" y="540" width="80" height="5" rx="2.5" fill="#E84E1B"/>
+
+    <!-- Checklist items: unchecked, provoking self-assessment -->
+    <g transform="translate(100, 600)">
+      <!-- Item 1 -->
+      <g>
+        <rect x="0" y="0" width="36" height="36" rx="8" fill="none" stroke="#005E66" stroke-width="2.5" opacity="0.5"/>
+        <text x="56" y="27" fill="#151311" font-family="'Avenir Next', 'Segoe UI', sans-serif" font-size="26" opacity="0.8">Same cost methodology across every plant?</text>
+      </g>
+
+      <!-- Item 2 -->
+      <g transform="translate(0, 70)">
+        <rect x="0" y="0" width="36" height="36" rx="8" fill="none" stroke="#005E66" stroke-width="2.5" opacity="0.5"/>
+        <text x="56" y="27" fill="#151311" font-family="'Avenir Next', 'Segoe UI', sans-serif" font-size="26" opacity="0.8">No asset records duplicated or dropped?</text>
+      </g>
+
+      <!-- Item 3 -->
+      <g transform="translate(0, 140)">
+        <rect x="0" y="0" width="36" height="36" rx="8" fill="none" stroke="#005E66" stroke-width="2.5" opacity="0.5"/>
+        <text x="56" y="27" fill="#151311" font-family="'Avenir Next', 'Segoe UI', sans-serif" font-size="26" opacity="0.8">Board report comparable across locations?</text>
+      </g>
+
+      <!-- Item 4 -->
+      <g transform="translate(0, 210)">
+        <rect x="0" y="0" width="36" height="36" rx="8" fill="none" stroke="#005E66" stroke-width="2.5" opacity="0.5"/>
+        <text x="56" y="27" fill="#151311" font-family="'Avenir Next', 'Segoe UI', sans-serif" font-size="26" opacity="0.8">Closing validation actually performed?</text>
+      </g>
+    </g>
+
+    <!-- Result statement -->
+    <g transform="translate(100, 920)">
+      <rect width="1000" height="80" rx="14" fill="#005E66" opacity="0.08"/>
+      <text x="32" y="50" fill="#005E66" font-family="Georgia, 'Iowan Old Style', Palatino, serif" font-size="28" font-weight="600">
+        If you checked zero, you're not alone.
+      </text>
+    </g>
+
+    <!-- Brand lockup -->
+    <g transform="translate(100, 1090)">
+      <rect width="40" height="40" rx="11" fill="#f7f3ea" stroke="#c9b9a5" stroke-width="0.8"/>
+      <path d="M9 14h7c3.4 0 6.2 2.8 6.2 6.2v0c0 3.4-2.8 6.2-6.2 6.2H9V14z" fill="#005e66"/>
+      <path d="M31 26h-7c-3.4 0-6.2-2.8-6.2-6.2v0c0-3.4 2.8-6.2 6.2-6.2H31V26z" fill="#e84e1b"/>
+      <circle cx="29.2" cy="20" r="2.1" fill="#f7f3ea"/>
+      <text x="52" y="22" fill="#151311" font-family="Georgia, 'Iowan Old Style', Palatino, serif" font-size="22" letter-spacing="0.3">CloseLoop</text>
+      <text x="53" y="36" fill="#655C53" font-family="'IBM Plex Mono', monospace" font-size="10" letter-spacing="2">MIGRATION INTEGRITY PLATFORM</text>
+    </g>
+  </g>
+</svg>

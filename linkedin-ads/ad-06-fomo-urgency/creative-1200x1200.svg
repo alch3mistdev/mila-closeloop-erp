@@ -1,0 +1,86 @@
+<svg width="1200" height="1200" viewBox="0 0 1200 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <clipPath id="rounded"><rect width="1200" height="1200" rx="24"/></clipPath>
+    <linearGradient id="urgencyGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#005E66"/>
+      <stop offset="100%" stop-color="#151311"/>
+    </linearGradient>
+  </defs>
+  <g clip-path="url(#rounded)">
+    <!-- Background: gradient from teal to dark -->
+    <rect width="1200" height="1200" fill="url(#urgencyGrad)"/>
+
+    <!-- Subtle clock/countdown visual elements -->
+    <g transform="translate(600, 400)" opacity="0.06">
+      <circle cx="0" cy="0" r="380" stroke="#ffffff" stroke-width="3" fill="none"/>
+      <circle cx="0" cy="0" r="350" stroke="#ffffff" stroke-width="1" fill="none"/>
+      <!-- Clock tick marks -->
+      <line x1="0" y1="-340" x2="0" y2="-310" stroke="#ffffff" stroke-width="3"/>
+      <line x1="170" y1="-294" x2="155" y2="-268" stroke="#ffffff" stroke-width="3"/>
+      <line x1="294" y1="-170" x2="268" y2="-155" stroke="#ffffff" stroke-width="3"/>
+      <line x1="340" y1="0" x2="310" y2="0" stroke="#ffffff" stroke-width="3"/>
+      <line x1="294" y1="170" x2="268" y2="155" stroke="#ffffff" stroke-width="3"/>
+      <line x1="170" y1="294" x2="155" y2="268" stroke="#ffffff" stroke-width="3"/>
+      <line x1="0" y1="340" x2="0" y2="310" stroke="#ffffff" stroke-width="3"/>
+      <line x1="-170" y1="294" x2="-155" y2="268" stroke="#ffffff" stroke-width="3"/>
+      <line x1="-294" y1="170" x2="-268" y2="155" stroke="#ffffff" stroke-width="3"/>
+      <line x1="-340" y1="0" x2="-310" y2="0" stroke="#ffffff" stroke-width="3"/>
+      <line x1="-294" y1="-170" x2="-268" y2="-155" stroke="#ffffff" stroke-width="3"/>
+      <line x1="-170" y1="-294" x2="-155" y2="-268" stroke="#ffffff" stroke-width="3"/>
+    </g>
+
+    <!-- Eyebrow -->
+    <text x="100" y="130" fill="#2d8b91" font-family="'IBM Plex Mono', 'SFMono-Regular', Menlo, Consolas, monospace" font-size="22" letter-spacing="4" font-weight="500">SAP ECC END OF SUPPORT</text>
+
+    <!-- Countdown label -->
+    <text x="600" y="260" text-anchor="middle" fill="#ffffff" font-family="'Avenir Next', 'Segoe UI', sans-serif" font-size="28" opacity="0.5" letter-spacing="1">STANDARD MAINTENANCE ENDS</text>
+
+    <!-- Hero year: massive orange -->
+    <text x="600" y="520" text-anchor="middle" fill="#E84E1B" font-family="Georgia, 'Iowan Old Style', 'Palatino Linotype', Palatino, serif" font-size="260" font-weight="700" letter-spacing="-8">2027</text>
+
+    <!-- Timeline bar -->
+    <g transform="translate(120, 580)">
+      <rect x="0" y="0" width="960" height="8" rx="4" fill="#ffffff" opacity="0.15"/>
+      <!-- Progress: we're at ~2026 on a 2024-2030 timeline -->
+      <rect x="0" y="0" width="320" height="8" rx="4" fill="#E84E1B" opacity="0.8"/>
+      <!-- Year markers -->
+      <text x="0" y="40" fill="#655C53" font-family="'IBM Plex Mono', monospace" font-size="14" letter-spacing="1">2024</text>
+      <text x="310" y="40" fill="#E84E1B" font-family="'IBM Plex Mono', monospace" font-size="14" letter-spacing="1" font-weight="700">NOW</text>
+      <text x="470" y="40" fill="#ffffff" font-family="'IBM Plex Mono', monospace" font-size="14" letter-spacing="1" opacity="0.7">2027</text>
+      <text x="920" y="40" fill="#655C53" font-family="'IBM Plex Mono', monospace" font-size="14" letter-spacing="1">2030</text>
+
+      <!-- Vertical marker at 2027 -->
+      <line x1="480" y1="-10" x2="480" y2="30" stroke="#ffffff" stroke-width="2" opacity="0.4"/>
+      <!-- Extended support zone -->
+      <rect x="480" y="0" width="480" height="8" rx="0" fill="#ffffff" opacity="0.06"/>
+      <text x="480" y="62" fill="#655C53" font-family="'IBM Plex Mono', monospace" font-size="11" letter-spacing="1">EXTENDED SUPPORT (STOPGAP)</text>
+    </g>
+
+    <!-- Ready? kicker -->
+    <text x="600" y="760" text-anchor="middle" fill="#ffffff" font-family="Georgia, 'Iowan Old Style', Palatino, serif" font-size="72" font-weight="700">Ready?</text>
+
+    <!-- Supporting text -->
+    <text x="600" y="850" text-anchor="middle" fill="#ffffff" font-family="'Avenir Next', 'Segoe UI', sans-serif" font-size="26" opacity="0.5">
+      <tspan x="600" dy="0">Rushing migration without validation is how</tspan>
+      <tspan x="600" dy="38">you end up with years of workarounds.</tspan>
+    </text>
+
+    <!-- Bottom bar -->
+    <g transform="translate(100, 960)">
+      <rect width="1000" height="56" rx="10" fill="#E84E1B" opacity="0.15"/>
+      <text x="500" y="37" text-anchor="middle" fill="#ffffff" font-family="'Avenir Next', sans-serif" font-size="22" letter-spacing="0.5">
+        Validate before you go live. <tspan font-weight="700">Not years after.</tspan>
+      </text>
+    </g>
+
+    <!-- Brand lockup -->
+    <g transform="translate(100, 1100)">
+      <rect width="40" height="40" rx="11" fill="#f7f3ea" stroke="#c9b9a5" stroke-width="0.8"/>
+      <path d="M9 14h7c3.4 0 6.2 2.8 6.2 6.2v0c0 3.4-2.8 6.2-6.2 6.2H9V14z" fill="#005e66"/>
+      <path d="M31 26h-7c-3.4 0-6.2-2.8-6.2-6.2v0c0-3.4 2.8-6.2 6.2-6.2H31V26z" fill="#e84e1b"/>
+      <circle cx="29.2" cy="20" r="2.1" fill="#f7f3ea"/>
+      <text x="52" y="22" fill="#ffffff" font-family="Georgia, 'Iowan Old Style', Palatino, serif" font-size="22" letter-spacing="0.3">CloseLoop</text>
+      <text x="53" y="36" fill="#2d8b91" font-family="'IBM Plex Mono', monospace" font-size="10" letter-spacing="2">MIGRATION INTEGRITY PLATFORM</text>
+    </g>
+  </g>
+</svg>

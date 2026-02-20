@@ -1,0 +1,72 @@
+<svg width="1200" height="1200" viewBox="0 0 1200 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <clipPath id="rounded"><rect width="1200" height="1200" rx="24"/></clipPath>
+  </defs>
+  <g clip-path="url(#rounded)">
+    <!-- Background: near-black -->
+    <rect width="1200" height="1200" fill="#151311"/>
+
+    <!-- Subtle radial glow behind numbers -->
+    <circle cx="600" cy="380" r="500" fill="#005E66" opacity="0.06"/>
+
+    <!-- Eyebrow -->
+    <text x="100" y="130" fill="#655C53" font-family="'IBM Plex Mono', 'SFMono-Regular', Menlo, Consolas, monospace" font-size="22" letter-spacing="4" font-weight="500">VALIDATED RESEARCH</text>
+
+    <!-- Hero stat: $100M+ -->
+    <text x="600" y="380" text-anchor="middle" fill="#E84E1B" font-family="Georgia, 'Iowan Old Style', 'Palatino Linotype', Palatino, serif" font-size="180" font-weight="700" letter-spacing="-4">$100M+</text>
+
+    <!-- Sub-stat: 10+ YEARS -->
+    <text x="600" y="510" text-anchor="middle" fill="#ffffff" font-family="Georgia, 'Iowan Old Style', 'Palatino Linotype', Palatino, serif" font-size="90" font-weight="700" letter-spacing="2">10+ YEARS</text>
+
+    <!-- Separator -->
+    <rect x="500" y="560" width="200" height="5" rx="2.5" fill="#E84E1B"/>
+
+    <!-- Kicker -->
+    <text x="600" y="640" text-anchor="middle" fill="#ffffff" font-family="Georgia, 'Iowan Old Style', Palatino, serif" font-size="56" font-weight="700" opacity="0.95">Still Not Done.</text>
+
+    <!-- Supporting text -->
+    <text x="600" y="740" text-anchor="middle" fill="#ffffff" font-family="'Avenir Next', 'Segoe UI', sans-serif" font-size="26" opacity="0.45">
+      <tspan x="600" dy="0">ERP consolidation programs at global manufacturers.</tspan>
+      <tspan x="600" dy="38">First-hand accounts from plant finance leaders.</tspan>
+    </text>
+
+    <!-- Stat breakdown row -->
+    <g transform="translate(100, 840)">
+      <!-- Stat 1 -->
+      <g>
+        <text x="165" y="30" text-anchor="middle" fill="#E84E1B" font-family="Georgia, Palatino, serif" font-size="48" font-weight="700">50+</text>
+        <text x="165" y="60" text-anchor="middle" fill="#655C53" font-family="'IBM Plex Mono', monospace" font-size="14" letter-spacing="2">PLANTS</text>
+      </g>
+
+      <!-- Stat 2 -->
+      <g>
+        <text x="500" y="30" text-anchor="middle" fill="#E84E1B" font-family="Georgia, Palatino, serif" font-size="48" font-weight="700">6+</text>
+        <text x="500" y="60" text-anchor="middle" fill="#655C53" font-family="'IBM Plex Mono', monospace" font-size="14" letter-spacing="2">SOURCE SYSTEMS</text>
+      </g>
+
+      <!-- Stat 3 -->
+      <g>
+        <text x="835" y="30" text-anchor="middle" fill="#E84E1B" font-family="Georgia, Palatino, serif" font-size="48" font-weight="700">0</text>
+        <text x="835" y="60" text-anchor="middle" fill="#655C53" font-family="'IBM Plex Mono', monospace" font-size="14" letter-spacing="2">VALIDATION RUNS</text>
+      </g>
+    </g>
+
+    <!-- Compression promise -->
+    <g transform="translate(100, 990)">
+      <rect width="1000" height="56" rx="10" fill="#005E66" opacity="0.3"/>
+      <text x="500" y="37" text-anchor="middle" fill="#ffffff" font-family="'Avenir Next', 'Segoe UI', sans-serif" font-size="22" letter-spacing="0.5">
+        Per-plant validation: <tspan fill="#E84E1B" font-weight="700">months → weeks</tspan> with automated validation
+      </text>
+    </g>
+
+    <!-- Brand lockup -->
+    <g transform="translate(100, 1100)">
+      <rect width="40" height="40" rx="11" fill="#f7f3ea" stroke="#c9b9a5" stroke-width="0.8"/>
+      <path d="M9 14h7c3.4 0 6.2 2.8 6.2 6.2v0c0 3.4-2.8 6.2-6.2 6.2H9V14z" fill="#005e66"/>
+      <path d="M31 26h-7c-3.4 0-6.2-2.8-6.2-6.2v0c0-3.4 2.8-6.2 6.2-6.2H31V26z" fill="#e84e1b"/>
+      <circle cx="29.2" cy="20" r="2.1" fill="#f7f3ea"/>
+      <text x="52" y="22" fill="#ffffff" font-family="Georgia, 'Iowan Old Style', Palatino, serif" font-size="22" letter-spacing="0.3">CloseLoop</text>
+      <text x="53" y="36" fill="#655C53" font-family="'IBM Plex Mono', monospace" font-size="10" letter-spacing="2">MIGRATION INTEGRITY PLATFORM</text>
+    </g>
+  </g>
+</svg>

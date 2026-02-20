@@ -1,0 +1,110 @@
+<svg width="1080" height="1080" viewBox="0 0 1080 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <clipPath id="rounded"><rect width="1080" height="1080" rx="20"/></clipPath>
+  </defs>
+  <g clip-path="url(#rounded)">
+    <!-- Background: warm beige -->
+    <rect width="1080" height="1080" fill="#F1EEE8"/>
+
+    <!-- Step number -->
+    <text x="80" y="130" fill="#E84E1B" font-family="Georgia, 'Iowan Old Style', Palatino, serif" font-size="80" font-weight="700" opacity="0.2">03</text>
+
+    <!-- Section label -->
+    <text x="80" y="180" fill="#E84E1B" font-family="'IBM Plex Mono', 'SFMono-Regular', Menlo, monospace" font-size="20" letter-spacing="4" font-weight="600">THE RESULT</text>
+
+    <!-- Separator -->
+    <rect x="80" y="200" width="60" height="4" rx="2" fill="#E84E1B"/>
+
+    <!-- Dashboard mockup -->
+    <g transform="translate(80, 250)">
+      <!-- Dashboard container -->
+      <rect width="920" height="440" rx="16" fill="#ffffff" stroke="#d7cec1" stroke-width="1.5"/>
+
+      <!-- Dashboard header -->
+      <rect x="0" y="0" width="920" height="50" rx="16" fill="#005E66"/>
+      <rect x="0" y="30" width="920" height="20" fill="#005E66"/>
+      <text x="24" y="34" fill="#ffffff" font-family="'IBM Plex Mono', monospace" font-size="14" letter-spacing="1" font-weight="600">MIGRATION VALIDATION DASHBOARD</text>
+      <circle cx="860" cy="25" r="6" fill="#275928"/>
+      <circle cx="885" cy="25" r="6" fill="#8f5a00"/>
+      <circle cx="885" cy="25" r="6" fill="#E84E1B" opacity="0"/>
+
+      <!-- Metric cards row -->
+      <g transform="translate(24, 70)">
+        <!-- Card 1: Plants Validated -->
+        <rect x="0" y="0" width="205" height="80" rx="10" fill="#f7f3ea" stroke="#d7cec1" stroke-width="1"/>
+        <text x="16" y="28" fill="#655C53" font-family="'IBM Plex Mono', monospace" font-size="11" letter-spacing="1">PLANTS VALIDATED</text>
+        <text x="16" y="62" fill="#275928" font-family="Georgia, Palatino, serif" font-size="36" font-weight="700">48/50</text>
+
+        <!-- Card 2: Pass Rate -->
+        <rect x="225" y="0" width="205" height="80" rx="10" fill="#f7f3ea" stroke="#d7cec1" stroke-width="1"/>
+        <text x="241" y="28" fill="#655C53" font-family="'IBM Plex Mono', monospace" font-size="11" letter-spacing="1">OVERALL PASS RATE</text>
+        <text x="241" y="62" fill="#005E66" font-family="Georgia, Palatino, serif" font-size="36" font-weight="700">87.3%</text>
+
+        <!-- Card 3: Open Discrepancies -->
+        <rect x="450" y="0" width="205" height="80" rx="10" fill="#f7f3ea" stroke="#d7cec1" stroke-width="1"/>
+        <text x="466" y="28" fill="#655C53" font-family="'IBM Plex Mono', monospace" font-size="11" letter-spacing="1">OPEN FINDINGS</text>
+        <text x="466" y="62" fill="#E84E1B" font-family="Georgia, Palatino, serif" font-size="36" font-weight="700">23</text>
+
+        <!-- Card 4: Remediated -->
+        <rect x="675" y="0" width="205" height="80" rx="10" fill="#f7f3ea" stroke="#d7cec1" stroke-width="1"/>
+        <text x="691" y="28" fill="#655C53" font-family="'IBM Plex Mono', monospace" font-size="11" letter-spacing="1">REMEDIATED</text>
+        <text x="691" y="62" fill="#275928" font-family="Georgia, Palatino, serif" font-size="36" font-weight="700">142</text>
+      </g>
+
+      <!-- Findings list -->
+      <g transform="translate(24, 175)">
+        <text x="0" y="20" fill="#151311" font-family="'IBM Plex Mono', monospace" font-size="13" letter-spacing="1" font-weight="600">PRIORITIZED DISCREPANCIES</text>
+
+        <!-- Finding row 1: High severity -->
+        <rect x="0" y="35" width="872" height="44" rx="8" fill="#A52323" opacity="0.06"/>
+        <rect x="10" y="43" width="8" height="28" rx="2" fill="#A52323"/>
+        <text x="30" y="62" fill="#151311" font-family="'Avenir Next', sans-serif" font-size="14">Cost allocation methodology mismatch — Plant 03 vs Plant 07</text>
+        <rect x="720" y="47" width="60" height="22" rx="4" fill="#A52323" opacity="0.15"/>
+        <text x="735" y="63" fill="#A52323" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="700">HIGH</text>
+        <text x="800" y="63" fill="#005E66" font-family="'IBM Plex Mono', monospace" font-size="11" letter-spacing="0.5" font-weight="600">FIX →</text>
+
+        <!-- Finding row 2: High severity -->
+        <rect x="0" y="85" width="872" height="44" rx="8" fill="#A52323" opacity="0.04"/>
+        <rect x="10" y="93" width="8" height="28" rx="2" fill="#A52323"/>
+        <text x="30" y="112" fill="#151311" font-family="'Avenir Next', sans-serif" font-size="14">Asset number collision — Plant 12 (Oracle) vs Plant 01 (ECC)</text>
+        <rect x="720" y="97" width="60" height="22" rx="4" fill="#A52323" opacity="0.15"/>
+        <text x="735" y="113" fill="#A52323" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="700">HIGH</text>
+        <text x="800" y="113" fill="#005E66" font-family="'IBM Plex Mono', monospace" font-size="11" letter-spacing="0.5" font-weight="600">FIX →</text>
+
+        <!-- Finding row 3: Medium severity -->
+        <rect x="0" y="135" width="872" height="44" rx="8" fill="#8f5a00" opacity="0.04"/>
+        <rect x="10" y="143" width="8" height="28" rx="2" fill="#8f5a00"/>
+        <text x="30" y="162" fill="#151311" font-family="'Avenir Next', sans-serif" font-size="14">Unmapped fields with financial materiality — GL account structure</text>
+        <rect x="720" y="147" width="60" height="22" rx="4" fill="#8f5a00" opacity="0.15"/>
+        <text x="736" y="163" fill="#8f5a00" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="700">MED</text>
+        <text x="800" y="163" fill="#005E66" font-family="'IBM Plex Mono', monospace" font-size="11" letter-spacing="0.5" font-weight="600">FIX →</text>
+      </g>
+    </g>
+
+    <!-- Timeline compression -->
+    <g transform="translate(80, 740)">
+      <rect width="920" height="70" rx="14" fill="#005E66" opacity="0.08"/>
+      <!-- Months label with strikethrough -->
+      <text x="40" y="45" fill="#A52323" font-family="Georgia, Palatino, serif" font-size="36" font-weight="700" text-decoration="line-through" opacity="0.5">Months</text>
+      <!-- Arrow -->
+      <text x="280" y="48" fill="#E84E1B" font-family="sans-serif" font-size="36">→</text>
+      <!-- Weeks label -->
+      <text x="340" y="45" fill="#275928" font-family="Georgia, Palatino, serif" font-size="36" font-weight="700">Weeks</text>
+      <!-- Description -->
+      <text x="520" y="45" fill="#655C53" font-family="'Avenir Next', sans-serif" font-size="18" opacity="0.7">per-plant validation cycle</text>
+    </g>
+
+    <!-- Bottom text -->
+    <text x="80" y="880" fill="#151311" font-family="Georgia, 'Iowan Old Style', Palatino, serif" font-size="32" font-weight="700">Step-by-step remediation.</text>
+    <text x="80" y="920" fill="#151311" font-family="Georgia, 'Iowan Old Style', Palatino, serif" font-size="32" font-weight="700">Audit-ready evidence trail.</text>
+    <text x="80" y="970" fill="#655C53" font-family="'Avenir Next', sans-serif" font-size="22" opacity="0.7">Designed for organizations managing 50+ location migrations.</text>
+
+    <!-- Brand mark -->
+    <g transform="translate(900, 1000)">
+      <rect width="36" height="36" rx="10" fill="#f7f3ea" stroke="#c9b9a5" stroke-width="0.8"/>
+      <path d="M8 13h6c3 0 5.4 2.4 5.4 5.4v0c0 3-2.4 5.4-5.4 5.4H8V13z" fill="#005e66"/>
+      <path d="M28 23h-6c-3 0-5.4-2.4-5.4-5.4v0c0-3 2.4-5.4 5.4-5.4H28V23z" fill="#e84e1b"/>
+      <circle cx="26.4" cy="18" r="1.8" fill="#f7f3ea"/>
+    </g>
+  </g>
+</svg>

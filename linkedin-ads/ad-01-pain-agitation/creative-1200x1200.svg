@@ -1,0 +1,101 @@
+<svg width="1200" height="1200" viewBox="0 0 1200 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <clipPath id="rounded"><rect width="1200" height="1200" rx="24"/></clipPath>
+  </defs>
+  <g clip-path="url(#rounded)">
+    <!-- Background -->
+    <rect width="1200" height="1200" fill="#005E66"/>
+    <!-- Subtle texture: diagonal lines -->
+    <g opacity="0.04">
+      <line x1="0" y1="0" x2="1200" y2="1200" stroke="#fff" stroke-width="1"/>
+      <line x1="200" y1="0" x2="1400" y2="1200" stroke="#fff" stroke-width="1"/>
+      <line x1="400" y1="0" x2="1600" y2="1200" stroke="#fff" stroke-width="1"/>
+      <line x1="600" y1="0" x2="1800" y2="1200" stroke="#fff" stroke-width="1"/>
+      <line x1="-200" y1="0" x2="1000" y2="1200" stroke="#fff" stroke-width="1"/>
+      <line x1="-400" y1="0" x2="800" y2="1200" stroke="#fff" stroke-width="1"/>
+    </g>
+
+    <!-- Eyebrow -->
+    <text x="100" y="130" fill="#2d8b91" font-family="'IBM Plex Mono', 'SFMono-Regular', Menlo, Consolas, monospace" font-size="22" letter-spacing="4" font-weight="500">ERP MIGRATION VALIDATION</text>
+
+    <!-- Headline -->
+    <text x="100" y="240" fill="#ffffff" font-family="Georgia, 'Iowan Old Style', 'Palatino Linotype', Palatino, serif" font-size="72" font-weight="700">
+      <tspan x="100" dy="0">Your Consolidated</tspan>
+      <tspan x="100" dy="90">Reports Don't</tspan>
+      <tspan x="100" dy="90">Actually</tspan>
+      <tspan x="100" dy="90">Consolidate</tspan>
+    </text>
+
+    <!-- Divider line -->
+    <rect x="100" y="570" width="80" height="5" rx="2.5" fill="#E84E1B"/>
+
+    <!-- Data visualization: misaligned bars representing incomparable plant data -->
+    <g transform="translate(100, 630)">
+      <!-- Row labels -->
+      <text x="0" y="20" fill="#2d8b91" font-family="'IBM Plex Mono', monospace" font-size="16" letter-spacing="1">PLANT 01</text>
+      <text x="0" y="70" fill="#2d8b91" font-family="'IBM Plex Mono', monospace" font-size="16" letter-spacing="1">PLANT 02</text>
+      <text x="0" y="120" fill="#2d8b91" font-family="'IBM Plex Mono', monospace" font-size="16" letter-spacing="1">PLANT 03</text>
+      <text x="0" y="170" fill="#2d8b91" font-family="'IBM Plex Mono', monospace" font-size="16" letter-spacing="1">PLANT 04</text>
+      <text x="0" y="220" fill="#2d8b91" font-family="'IBM Plex Mono', monospace" font-size="16" letter-spacing="1">PLANT 05</text>
+      <text x="0" y="270" fill="#2d8b91" font-family="'IBM Plex Mono', monospace" font-size="16" letter-spacing="1">PLANT 06</text>
+
+      <!-- Data bars — deliberately misaligned to show incomparability -->
+      <!-- Plant 1: Oracle -->
+      <rect x="140" y="4" width="680" height="24" rx="4" fill="#E84E1B" opacity="0.9"/>
+      <rect x="140" y="4" width="520" height="24" rx="4" fill="#E84E1B"/>
+
+      <!-- Plant 2: SAP ECC -->
+      <rect x="140" y="54" width="780" height="24" rx="4" fill="#ff885f" opacity="0.9"/>
+      <rect x="140" y="54" width="610" height="24" rx="4" fill="#ff885f"/>
+
+      <!-- Plant 3: Custom -->
+      <rect x="140" y="104" width="420" height="24" rx="4" fill="#E84E1B" opacity="0.9"/>
+      <rect x="140" y="104" width="310" height="24" rx="4" fill="#E84E1B"/>
+
+      <!-- Plant 4: AS/400 -->
+      <rect x="140" y="154" width="590" height="24" rx="4" fill="#f1eee8" opacity="0.6"/>
+      <rect x="140" y="154" width="440" height="24" rx="4" fill="#f1eee8" opacity="0.8"/>
+
+      <!-- Plant 5: Excel -->
+      <rect x="140" y="204" width="350" height="24" rx="4" fill="#ff885f" opacity="0.9"/>
+      <rect x="140" y="204" width="200" height="24" rx="4" fill="#ff885f"/>
+
+      <!-- Plant 6: Oracle -->
+      <rect x="140" y="254" width="710" height="24" rx="4" fill="#f1eee8" opacity="0.6"/>
+      <rect x="140" y="254" width="560" height="24" rx="4" fill="#f1eee8" opacity="0.8"/>
+
+      <!-- Discrepancy markers -->
+      <circle cx="670" cy="16" r="6" fill="#A52323"/>
+      <circle cx="760" cy="66" r="6" fill="#A52323"/>
+      <circle cx="360" cy="116" r="6" fill="#A52323"/>
+      <circle cx="490" cy="166" r="6" fill="#A52323"/>
+      <circle cx="250" cy="216" r="6" fill="#A52323"/>
+      <circle cx="610" cy="266" r="6" fill="#A52323"/>
+
+      <!-- Column header: "OPERATING MARGIN" -->
+      <text x="140" y="-16" fill="#2d8b91" font-family="'IBM Plex Mono', monospace" font-size="14" letter-spacing="2" opacity="0.7">OPERATING MARGIN COMPARISON</text>
+
+      <!-- Mismatch annotation line -->
+      <line x1="920" y1="0" x2="920" y2="280" stroke="#A52323" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.6"/>
+      <text x="930" y="145" fill="#A52323" font-family="'IBM Plex Mono', monospace" font-size="13" letter-spacing="1" opacity="0.8">MISMATCH</text>
+    </g>
+
+    <!-- Subtext -->
+    <text x="100" y="990" fill="#ffffff" font-family="'Avenir Next', 'Segoe UI', sans-serif" font-size="26" opacity="0.7">
+      <tspan x="100" dy="0">6 ERPs. 12 plants. Every one calculates</tspan>
+      <tspan x="100" dy="36">operating margin differently.</tspan>
+    </text>
+
+    <!-- Brand lockup -->
+    <g transform="translate(100, 1090)">
+      <!-- Logo mark -->
+      <rect width="40" height="40" rx="11" fill="#f7f3ea" stroke="#c9b9a5" stroke-width="0.8"/>
+      <path d="M9 14h7c3.4 0 6.2 2.8 6.2 6.2v0c0 3.4-2.8 6.2-6.2 6.2H9V14z" fill="#005e66"/>
+      <path d="M31 26h-7c-3.4 0-6.2-2.8-6.2-6.2v0c0-3.4 2.8-6.2 6.2-6.2H31V26z" fill="#e84e1b"/>
+      <circle cx="29.2" cy="20" r="2.1" fill="#f7f3ea"/>
+      <!-- Brand name -->
+      <text x="52" y="22" fill="#ffffff" font-family="Georgia, 'Iowan Old Style', Palatino, serif" font-size="22" letter-spacing="0.3">CloseLoop</text>
+      <text x="53" y="36" fill="#2d8b91" font-family="'IBM Plex Mono', monospace" font-size="10" letter-spacing="2">MIGRATION INTEGRITY PLATFORM</text>
+    </g>
+  </g>
+</svg>
