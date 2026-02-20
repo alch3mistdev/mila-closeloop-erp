@@ -3,9 +3,10 @@ import { BrandLockup } from "../brand/BrandLockup";
 interface HeroProps {
   onPrimaryCta: () => void;
   onExploreSimulator: () => void;
+  onChecklistClick?: () => void;
 }
 
-export function Hero({ onPrimaryCta, onExploreSimulator }: HeroProps) {
+export function Hero({ onPrimaryCta, onExploreSimulator, onChecklistClick }: HeroProps) {
   return (
     <section className="section hero" aria-label="Hero">
       <div className="hero-grid" data-reveal="true">
@@ -25,7 +26,7 @@ export function Hero({ onPrimaryCta, onExploreSimulator }: HeroProps) {
             <button type="button" className="btn btn-primary" onClick={onPrimaryCta}>
               Request a Migration Diagnostic
             </button>
-            <a className="btn btn-secondary hero-secondary" href="/resources/erp-migration-validation-checklist">
+            <a className="btn btn-secondary hero-secondary" href="/resources/erp-migration-validation-checklist" onClick={onChecklistClick}>
               Download the Validation Checklist
             </a>
           </div>

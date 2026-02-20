@@ -1,3 +1,11 @@
+"use client";
+
+import { FormEvent, useEffect, useState } from "react";
+import { isValidEmail } from "../../../lib/waitlist";
+import { trackEvent } from "../../../lib/analytics";
+
+const CHECKLIST_UNLOCK_KEY = "cl_checklist_unlocked";
+
 const CHECKLIST_SECTIONS = [
   {
     title: "Scope and Source Integrity",
@@ -53,7 +61,50 @@ const CHECKLIST_SECTIONS = [
   }
 ];
 
+function readUnlockState(): boolean {
+  try {
+    return window.localStorage.getItem(CHECKLIST_UNLOCK_KEY) !== null;
+  } catch {
+    return false;
+  }
+}
+
+function writeUnlockState(email: string): void {
+  try {
+    window.localStorage.setItem(CHECKLIST_UNLOCK_KEY, JSON.stringify({ email, unlockedAt: new Date().toISOString() }));
+  } catch {
+    // storage unavailable — content still unlocks for this session
+  }
+}
+
 export default function ValidationChecklistPage() {
+  const [unlocked, setUnlocked] = useState(false);
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (readUnlockState()) {
+      setUnlocked(true);
+    }
+
+    trackEvent("checklist_view");
+  }, []);
+
+  function handleUnlock(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const trimmed = email.trim();
+
+    if (!isValidEmail(trimmed)) {
+      setError("Enter a valid work email to continue.");
+      return;
+    }
+
+    writeUnlockState(trimmed);
+    trackEvent("checklist_unlock", { email: trimmed });
+    setUnlocked(true);
+    setError("");
+  }
+
   return (
     <main className="site-shell">
       <section className="section legal-page checklist-page">
@@ -63,22 +114,49 @@ export default function ValidationChecklistPage() {
           Built for design-partner teams managing heterogeneous-to-SAP migrations where cross-plant
           comparability and post-go-live integrity are business-critical.
         </p>
-        <div className="checklist-grid">
-          {CHECKLIST_SECTIONS.map((section) => (
-            <article key={section.title} className="checklist-card">
-              <h2>{section.title}</h2>
-              <ol>
-                {section.items.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ol>
-            </article>
-          ))}
+        <div className="checklist-content-wrapper">
+          <div className={unlocked ? "checklist-grid" : "checklist-grid checklist-blurred"}>
+            {CHECKLIST_SECTIONS.map((section) => (
+              <article key={section.title} className="checklist-card">
+                <h2>{section.title}</h2>
+                <ol>
+                  {section.items.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ol>
+              </article>
+            ))}
+          </div>
+          {!unlocked && (
+            <div className="checklist-gate">
+              <div className="checklist-gate-card">
+                <h2>Unlock the full 27-point checklist</h2>
+                <p>Enter your work email to access every validation check — no cost, no commitment.</p>
+                <form onSubmit={handleUnlock}>
+                  <div className="form-row">
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="name@company.com"
+                      autoComplete="email"
+                      required
+                    />
+                    <button type="submit" className="btn btn-primary">Unlock Checklist</button>
+                  </div>
+                  {error && <p className="error">{error}</p>}
+                </form>
+                <p className="gate-note">We&apos;ll send design partner updates. No spam.</p>
+              </div>
+            </div>
+          )}
         </div>
-        <p className="support-copy">
-          Want this run against your environment? Return to the homepage and request a migration
-          diagnostic.
-        </p>
+        {unlocked && (
+          <p className="support-copy">
+            Want this run against your environment?{" "}
+            <a href="/#final-waitlist">Return to the homepage and request a migration diagnostic.</a>
+          </p>
+        )}
       </section>
     </main>
   );

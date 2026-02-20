@@ -26,6 +26,11 @@ import {
   SharedScenario
 } from "../lib/scenarioModel";
 import { WaitlistScenarioSnapshot, WaitlistSource, normalizeSource } from "../lib/waitlist";
+import { initCampaign, trackEvent } from "../lib/analytics";
+
+const HASH_ALIASES: Record<string, string> = {
+  "how-it-works": "workflow-comparator"
+};
 
 export function HomePageClient() {
   const [scenario, setScenario] = useState<SharedScenario>(DEFAULT_SHARED_SCENARIO);
@@ -85,15 +90,43 @@ export function HomePageClient() {
     ]
   );
 
+  // Analytics init + UTM capture + source param handling
   useEffect(() => {
-    const parsedSource = normalizeSource(new URLSearchParams(window.location.search).get("source"));
+    const campaign = initCampaign();
+    trackEvent("page_view", { campaign });
 
-    if (!parsedSource) {
+    const params = new URLSearchParams(window.location.search);
+    const parsedSource = normalizeSource(params.get("source"));
+
+    if (parsedSource) {
+      setInlineSource(parsedSource);
+      setActiveSource(parsedSource);
+    } else if (params.get("utm_source")) {
+      setInlineSource("query_param");
+      setActiveSource("query_param");
+    }
+  }, []);
+
+  // Deep-link: scroll to hash target on mount
+  useEffect(() => {
+    const raw = window.location.hash.replace("#", "");
+
+    if (!raw) {
       return;
     }
 
-    setInlineSource(parsedSource);
-    setActiveSource(parsedSource);
+    const targetId = HASH_ALIASES[raw] ?? raw;
+
+    // Delay to let layout settle after hydration
+    const timer = setTimeout(() => {
+      const el = document.getElementById(targetId);
+
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }, 120);
+
+    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
@@ -132,6 +165,7 @@ export function HomePageClient() {
   function openWaitlist(source: WaitlistSource) {
     setActiveSource(source);
     setIsWaitlistOpen(true);
+    trackEvent("waitlist_open", { source });
   }
 
   function continueToWaitlist(source: WaitlistSource) {
@@ -147,6 +181,13 @@ export function HomePageClient() {
     }
 
     section.scrollIntoView({ behavior: "smooth", block: "start" });
+    trackEvent("section_scroll", { sectionId });
+
+    // Update URL hash without triggering a scroll jump
+    const displayHash = Object.entries(HASH_ALIASES).find(
+      ([, elementId]) => elementId === sectionId
+    )?.[0] ?? sectionId;
+    history.replaceState(null, "", `#${displayHash}`);
   }
 
   function updateScenario(changes: Partial<SharedScenario>) {
@@ -179,6 +220,7 @@ export function HomePageClient() {
       <Hero
         onPrimaryCta={() => openWaitlist("hero")}
         onExploreSimulator={() => scrollToSection("diagnostic-simulator")}
+        onChecklistClick={() => trackEvent("checklist_click")}
       />
       <PainNarrative />
       <ScenarioThread

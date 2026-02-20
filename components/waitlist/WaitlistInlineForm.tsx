@@ -7,6 +7,7 @@ import {
   isValidEmail,
   upsertWaitlistEntry
 } from "../../lib/waitlist";
+import { trackEvent } from "../../lib/analytics";
 
 interface WaitlistInlineFormProps {
   source: WaitlistSource;
@@ -86,6 +87,8 @@ export function WaitlistInlineForm({
       companySize: companySize || undefined,
       migrationTimeline: migrationTimeline || undefined
     });
+
+    trackEvent("waitlist_submit", { source, duplicate: result.duplicateUpdated });
 
     setStatus({
       type: "success",
