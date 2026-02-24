@@ -1578,6 +1578,45 @@ input[type="range"] {
   color: var(--warn);
 }
 
+.waitlist-confirmation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 200px;
+  animation: confirmFadeIn 400ms ease;
+}
+
+.confirmation-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--ok);
+  color: #fff;
+  font-size: 24px;
+  line-height: 48px;
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+.confirmation-heading {
+  margin: 0 0 8px;
+  font-size: 1.25rem;
+}
+
+.confirmation-message {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--ink-muted);
+  max-width: 360px;
+}
+
+@keyframes confirmFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 .modal-overlay {
   position: fixed;
   inset: 0;

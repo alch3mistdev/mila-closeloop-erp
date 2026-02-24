@@ -112,6 +112,21 @@ export function WaitlistInlineForm({
     setEmail("");
   }
 
+  if (status.type === "success") {
+    return (
+      <div className={`waitlist-form waitlist-confirmation${compact ? " compact" : ""}`} role="status" aria-live="polite">
+        <div className="confirmation-icon" aria-hidden="true">&#10003;</div>
+        <h3 className="confirmation-heading">You&apos;re on the list</h3>
+        <p className="confirmation-message">{status.message}</p>
+        {status.nonPersistent ? (
+          <p className="warning">
+            Browser storage is unavailable, so this device could not retain your submission locally.
+          </p>
+        ) : null}
+      </div>
+    );
+  }
+
   return (
     <form className={`waitlist-form${compact ? " compact" : ""}`} onSubmit={handleSubmit}>
       <div className="form-head">
@@ -180,12 +195,7 @@ export function WaitlistInlineForm({
         <option value="exploratory">Exploring / assessing</option>
       </select>
       <div className="form-status" aria-live="polite">
-        {status.type !== "idle" ? <p className={status.type}>{status.message}</p> : null}
-        {status.nonPersistent ? (
-          <p className="warning">
-            Browser storage is unavailable, so this device could not retain your demo submission locally.
-          </p>
-        ) : null}
+        {status.type === "error" ? <p className="error">{status.message}</p> : null}
       </div>
     </form>
   );
