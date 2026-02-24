@@ -3,6 +3,7 @@
 import { FormEvent, useEffect, useState } from "react";
 import { isValidEmail } from "../../../lib/waitlist";
 import { trackEvent } from "../../../lib/analytics";
+import { sendNotification } from "../../../lib/notify";
 
 const CHECKLIST_UNLOCK_KEY = "cl_checklist_unlocked";
 
@@ -100,6 +101,7 @@ export default function ValidationChecklistPage() {
     }
 
     writeUnlockState(trimmed);
+    sendNotification({ type: "checklist", email: trimmed });
     trackEvent("checklist_unlock", { email: trimmed });
     setUnlocked(true);
     setError("");

@@ -8,6 +8,7 @@ import {
   upsertWaitlistEntry
 } from "../../lib/waitlist";
 import { trackEvent } from "../../lib/analytics";
+import { sendNotification } from "../../lib/notify";
 
 interface WaitlistInlineFormProps {
   source: WaitlistSource;
@@ -86,6 +87,16 @@ export function WaitlistInlineForm({
       reportedPlantCount: normalizedPlantCount,
       companySize: companySize || undefined,
       migrationTimeline: migrationTimeline || undefined
+    });
+
+    sendNotification({
+      type: "waitlist",
+      email: trimmedEmail,
+      source,
+      plantCount: normalizedPlantCount,
+      companySize: companySize || undefined,
+      migrationTimeline: migrationTimeline || undefined,
+      scenarioSnapshot
     });
 
     trackEvent("waitlist_submit", { source, duplicate: result.duplicateUpdated });
