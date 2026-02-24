@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 
 const siteDescription =
@@ -78,6 +79,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         {children}
+        <Analytics />
         <script
           type="application/ld+json"
           // Metadata-only structured data to improve discoverability in pre-launch mode.
