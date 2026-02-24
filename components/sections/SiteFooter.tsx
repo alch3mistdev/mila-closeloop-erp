@@ -7,7 +7,7 @@ export function SiteFooter() {
           Migration integrity platform for heterogeneous-to-SAP programs.
         </p>
         <p className="footer-contact">
-          Contact: <a href="mailto:hello@closeloop.app">hello@closeloop.app</a>
+          Contact: <a href="mailto:hello@close-loop.app">hello@close-loop.app</a>
         </p>
         <nav aria-label="Legal">
           <a href="/privacy">Privacy</a>

@@ -7,7 +7,7 @@
 | **Format** | Sponsored Content — Single Image |
 | **Image Dimensions** | 1200×1200 (1:1 square) |
 | **LinkedIn CTA Button** | Download |
-| **Destination URL** | `https://closeloop.app/resources/erp-migration-validation-checklist` |
+| **Destination URL** | `https://close-loop.app/resources/erp-migration-validation-checklist` |
 | **Campaign Objective** | Lead Generation (checklist download) |
 
 ## Ad Copy

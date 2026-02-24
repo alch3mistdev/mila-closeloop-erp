@@ -7,7 +7,7 @@
 | **Format** | Sponsored Content — Single Image |
 | **Image Dimensions** | 1200×1200 (1:1 square) |
 | **LinkedIn CTA Button** | Learn More |
-| **Destination URL** | `https://closeloop.app/#how-it-works` |
+| **Destination URL** | `https://close-loop.app/#how-it-works` |
 | **Campaign Objective** | Website Visits / Brand Awareness |
 
 ## Ad Copy

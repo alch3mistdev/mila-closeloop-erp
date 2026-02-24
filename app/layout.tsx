@@ -10,13 +10,13 @@ const structuredData = {
     {
       "@type": "Organization",
       name: "CloseLoop",
-      url: "https://closeloop.app",
-      email: "hello@closeloop.app"
+      url: "https://close-loop.app",
+      email: "hello@close-loop.app"
     },
     {
       "@type": "WebSite",
       name: "CloseLoop",
-      url: "https://closeloop.app",
+      url: "https://close-loop.app",
       description: siteDescription
     },
     {
@@ -30,7 +30,7 @@ const structuredData = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://closeloop.app"),
+  metadataBase: new URL("https://close-loop.app"),
   title: "CloseLoop | Migration Integrity Platform",
   description: siteDescription,
   keywords: [
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "CloseLoop | Migration Integrity Platform",
     description: "Automated migration validation built for cross-plant comparability, discrepancy detection, and remediation tracking.",
-    url: "https://closeloop.app",
+    url: "https://close-loop.app",
     type: "website",
     images: [
       {

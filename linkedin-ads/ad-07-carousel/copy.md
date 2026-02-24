@@ -8,7 +8,7 @@
 | **Card Dimensions** | 1080×1080 (1:1 square, required) |
 | **Number of Cards** | 3 |
 | **LinkedIn CTA Button** | Learn More |
-| **Destination URL** | `https://closeloop.app` |
+| **Destination URL** | `https://close-loop.app` |
 | **Campaign Objective** | Website Visits / Lead Generation |
 
 ## Ad Copy
